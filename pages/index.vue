@@ -6,13 +6,13 @@ watchEffect(() => console.log(text.value))
 
 <template>
   <NuxtLayout>
-    <Spread>
+    <DoubleSpread>
       <template v-slot:left-page>
-        <WriteDownPage v-model:text="text" />
+        <WriteDownArea v-model:text="text" />
       </template>
       <template v-slot:right-page>
         right
       </template>
-    </Spread>
+    </DoubleSpread>
   </NuxtLayout>
 </template>
