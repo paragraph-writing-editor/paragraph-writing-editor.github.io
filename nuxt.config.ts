@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Paragraph Writing Note'
+      title: 'Paragraph Writing Editor'
     }
   }
 })
