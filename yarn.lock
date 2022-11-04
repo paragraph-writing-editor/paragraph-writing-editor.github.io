@@ -4105,6 +4105,11 @@ vue-devtools-stub@^0.1.0:
   resolved "https://registry.yarnpkg.com/vue-devtools-stub/-/vue-devtools-stub-0.1.0.tgz#a65b9485edecd4273cedcb8102c739b83add2c81"
   integrity sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==
 
+vue-material-design-icons@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/vue-material-design-icons/-/vue-material-design-icons-5.1.2.tgz#d0b9227786672fc17be239fb8c1d8e22e33feb45"
+  integrity sha512-nD1qFM2qAkMlVoe23EfNKIeMfYl6YjHZjSty9q0mwc2gXmPmvEhixywJQhM+VF5KVBI1zAkVTNLoUEERPY10pA==
+
 vue-router@^4.1.5:
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.1.6.tgz#b70303737e12b4814578d21d68d21618469375a1"
