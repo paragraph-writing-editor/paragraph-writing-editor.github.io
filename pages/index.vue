@@ -8,7 +8,7 @@ watchEffect(() => console.log(text.value))
   <NuxtLayout>
     <DoubleSpread>
       <template v-slot:left-page>
-        <WriteDownArea v-model:text="text" />
+        <WriteDownArea v-model="text" />
       </template>
       <template v-slot:right-page>
         right

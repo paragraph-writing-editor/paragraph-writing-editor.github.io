@@ -2,30 +2,30 @@
 import { useDebounceFn } from '@vueuse/shared';
 
 const props = defineProps<{
-  text: string
+  modelValue: string
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:text', value: string): void
+  (e: 'update:modelValue', value: string): void
 }>()
 
 /* NOTE:
  * innerText: 変更の有無を判定するためのステート
  * displayText: 変更を画面に反映するためのステート
  */
-const innerText = ref(props.text)
-const displayText = ref(props.text)
+const innerText = ref(props.modelValue)
+const displayText = ref(props.modelValue)
 watchEffect(() => {
-  if (innerText.value != props.text) {
-    innerText.value = props.text
-    displayText.value = props.text
+  if (innerText.value != props.modelValue) {
+    innerText.value = props.modelValue
+    displayText.value = props.modelValue
   }
 })
 
 const inputText = useDebounceFn(({ target }: Event) => {
   if (!(target instanceof HTMLDivElement)) return
   innerText.value = target.innerText
-  emit('update:text', target.innerText)
+  emit('update:modelValue', target.innerText)
 })
 </script>
 
