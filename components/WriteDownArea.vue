@@ -24,7 +24,17 @@ watchEffect(() => {
     innerText.value = props.modelValue
     applyText.value = props.modelValue
     applyKey.value = Math.random()
-    nextTick(() => areaRef.value.focus())
+    nextTick(() => { 
+      areaRef.value.focus()
+      if (props.modelValue.length > 0) {
+        const range = document.createRange()
+        const selection = window.getSelection()
+        range.setStart(areaRef.value.firstChild, props.modelValue.length)
+        range.collapse()
+        selection.removeAllRanges()
+        selection.addRange(range)
+      }
+    })
   }
 })
 
