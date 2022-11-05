@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const text = ref('')
 
-// handlers
 const clearText = () => {
   text.value = ''
 }
