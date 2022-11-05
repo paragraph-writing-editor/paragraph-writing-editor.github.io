@@ -25,5 +25,9 @@
   &:active {
     box-shadow: 1px 1px 2px gray;
   }
+
+  &+.icon-button {
+    margin-left: 4px;
+  }
 }
 </style>

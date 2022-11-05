@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ClipboardEdit from 'vue-material-design-icons/ClipboardEditOutline.vue';
+import ClipboardFile from 'vue-material-design-icons/ClipboardFileOutline.vue';
 import FileOutline from 'vue-material-design-icons/FileOutline.vue';
 </script>
 
@@ -8,6 +10,13 @@ import FileOutline from 'vue-material-design-icons/FileOutline.vue';
       <IconPartition />
       <IconButton aria-label="new file" data-balloon-pos="right" @click="$emit('new-click')">
         <FileOutline />
+      </IconButton>
+      <IconButton aria-label="paste from clipboard" data-balloon-pos="right" @click="$emit('paste-click')">
+        <ClipboardFile />
+      </IconButton>
+      <IconPartition />
+      <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
+        <ClipboardEdit />
       </IconButton>
     </div>
     <div class="workspace">
@@ -29,7 +38,7 @@ import FileOutline from 'vue-material-design-icons/FileOutline.vue';
   }
 
   .workspace {
-    flex-grow: 1;
+    height: calc(100% - 48px);
   }
 }
 </style>
