@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Paragraph Writing Editor'
+      title: 'Paragraph Writing Editor',
+      link: [{ rel: 'stylesheet', href: 'https://unpkg.com/balloon-css/balloon.min.css' }]
     }
   }
 })
