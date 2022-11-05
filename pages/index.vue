@@ -26,7 +26,7 @@ const pasteText = async () => {
   const clipboard = await navigator.clipboard.readText()
   if (clipboard.trim().length > 0) {
     text.value +=
-      (text.value.trim() == '' ? '' : '\n\n') +
+      (text.value.trim().length ? '\n\n' : '') +
       clipboard.replace(/\r\n/g, '\n').trim()
   }
 }
