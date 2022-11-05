@@ -19,17 +19,20 @@ const innerText = ref(props.modelValue)
 const applyText = ref(props.modelValue)
 const applyKey = ref(Math.random())
 const areaRef = ref(null)
-watchEffect(() => {
-  if (innerText.value != props.modelValue) {
-    innerText.value = props.modelValue
-    applyText.value = props.modelValue
+const { modelValue } = toRefs(props)
+watch(modelValue, (newValue, oldValue) => {
+  const propsChange = () => newValue != oldValue
+  const valueChange = () => innerText.value != newValue
+  if (propsChange() && valueChange()) {
+    innerText.value = newValue
+    applyText.value = newValue
     applyKey.value = Math.random()
     nextTick(() => { 
       areaRef.value.focus()
-      if (props.modelValue.length > 0) {
+      if (newValue.length > 0) {
         const range = document.createRange()
         const selection = window.getSelection()
-        range.setStart(areaRef.value.firstChild, props.modelValue.length)
+        range.setStart(areaRef.value.firstChild, newValue.length)
         range.collapse()
         selection.removeAllRanges()
         selection.addRange(range)
