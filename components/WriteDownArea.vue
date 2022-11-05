@@ -46,10 +46,29 @@ const inputText = useDebounceFn(({ target }: Event) => {
   innerText.value = target.innerText
   emit('update:modelValue', target.innerText)
 })
+
+const pasteText = (e: Event) => {
+  if (!(e instanceof ClipboardEvent)) return
+  const { target } = e
+  if (!(target instanceof HTMLDivElement)) return
+  // paste
+  e.preventDefault()
+  const clipboard = e.clipboardData.getData('text/plain')
+  const selection = window.getSelection()
+  const range = selection.getRangeAt(0)
+  range.deleteContents()
+  const node = document.createTextNode(clipboard)
+  range.insertNode(node)
+  selection.collapseToEnd()
+  // update
+  innerText.value = target.innerText
+  emit('update:modelValue', target.innerText)
+}
 </script>
 
 <template>
-  <div class="textarea" ref="areaRef" contentEditable="true" v-text="applyText" :key="applyKey" @input="inputText">
+  <div class="textarea" ref="areaRef" contentEditable="true" v-text="applyText" :key="applyKey" @input="inputText"
+    @paste="pasteText">
   </div>
 </template>
 
