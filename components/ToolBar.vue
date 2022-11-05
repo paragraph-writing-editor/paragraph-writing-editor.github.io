@@ -12,11 +12,11 @@ import FileOutline from 'vue-material-design-icons/FileOutline.vue';
         <FileOutline />
       </IconButton>
       <IconButton aria-label="paste from clipboard" data-balloon-pos="right" @click="$emit('paste-click')">
-        <ClipboardFile />
+        <ClipboardEdit />
       </IconButton>
       <IconPartition />
       <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
-        <ClipboardEdit />
+        <ClipboardFile />
       </IconButton>
     </div>
     <div class="workspace">
