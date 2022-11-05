@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const text = ref("")
+const text = ref('')
+
+// handlers
+const clearText = () => {
+  text.value = ''
+}
+
 // DEBUG:
 watchEffect(() => console.log(text.value))
 </script>
@@ -8,7 +14,9 @@ watchEffect(() => console.log(text.value))
   <NuxtLayout>
     <DoubleSpread>
       <template v-slot:left-page>
-        <WriteDownArea v-model="text" />
+        <ToolBar @new-click="clearText">
+          <WriteDownArea v-model="text" />
+        </ToolBar>
       </template>
       <template v-slot:right-page>
         right
