@@ -10,15 +10,21 @@ const emit = defineEmits<{
 }>()
 
 /* NOTE:
- * innerText: 変更の有無を判定するためのステート
- * displayText: 変更を画面に反映するためのステート
+ * innerText: 変更の有無を判定するためのテキスト
+ * applyText: 変更を画面に反映するためのテキスト
+ * applyKey:  変更を画面に反映するためのキー
+ * areaRef:   反映後にフォーカスするための参照
  */
 const innerText = ref(props.modelValue)
-const displayText = ref(props.modelValue)
+const applyText = ref(props.modelValue)
+const applyKey = ref(Math.random())
+const areaRef = ref(null)
 watchEffect(() => {
   if (innerText.value != props.modelValue) {
     innerText.value = props.modelValue
-    displayText.value = props.modelValue
+    applyText.value = props.modelValue
+    applyKey.value = Math.random()
+    nextTick(() => areaRef.value.focus())
   }
 })
 
@@ -30,7 +36,8 @@ const inputText = useDebounceFn(({ target }: Event) => {
 </script>
 
 <template>
-  <div class="textarea" contentEditable="true" v-text="displayText" @input="inputText"></div>
+  <div class="textarea" ref="areaRef" contentEditable="true" v-text="applyText" :key="applyKey" @input="inputText">
+  </div>
 </template>
 
 <style scoped lang="scss">
