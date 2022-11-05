@@ -1,14 +1,34 @@
 <script setup lang="ts">
 const text = ref('')
 
+const structure = computed(() => {
+  console.log('computed')
+  return text.value
+    // sections
+    .trim()
+    .replace(/\n\n+/g, '\n\n')
+    .split('\n\n')
+    // sentences
+    .map((it) => {
+      return it
+        .replace(/。/g, '。\n')
+        .trim()
+        .split('\n')
+        .filter((s) => s.length)
+    })
+})
+
 const clearText = () => {
   text.value = ''
 }
 
 const pasteText = async () => {
-  text.value +=
-    (text.value.trim() == '' ? '' : '\n\n') +
-    await navigator.clipboard.readText()
+  const clipboard = await navigator.clipboard.readText()
+  if (clipboard.trim().length > 0) {
+    text.value +=
+      (text.value.trim() == '' ? '' : '\n\n') +
+      clipboard.replace(/\r\n/g, '\n').trim()
+  }
 }
 
 const copyText = () => {
@@ -19,6 +39,7 @@ const copyText = () => {
 
 // DEBUG:
 watchEffect(() => console.log(text.value))
+watchEffect(() => console.log(structure.value))
 </script>
 
 <template>
@@ -30,7 +51,7 @@ watchEffect(() => console.log(text.value))
         </ToolBar>
       </template>
       <template v-slot:right-page>
-        right
+        <TopicSentenceHighlightView :model-value="structure" />
       </template>
     </DoubleSpread>
   </NuxtLayout>
