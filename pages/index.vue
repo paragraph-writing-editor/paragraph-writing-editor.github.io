@@ -12,7 +12,9 @@ const pasteText = async () => {
 }
 
 const copyText = () => {
-  navigator.clipboard.writeText(text.value)
+  if (text.value.trim().length > 0)
+    navigator.clipboard.writeText(text.value)
+      .then(() => window.alert("text was copied to clipboard"))
 }
 
 // DEBUG:
