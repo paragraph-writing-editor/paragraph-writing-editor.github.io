@@ -23,11 +23,8 @@ const clearText = () => {
 
 const pasteText = async () => {
   const clipboard = await navigator.clipboard.readText()
-  if (clipboard.trim().length > 0) {
-    text.value +=
-      (text.value.trim().length ? '\n\n' : '') +
-      clipboard.replace(/\r\n/g, '\n').trim()
-  }
+  if (clipboard.trim().length > 0)
+    text.value = clipboard.replace(/\r\n/g, '\n').trim()
 }
 
 const copyText = () => {
