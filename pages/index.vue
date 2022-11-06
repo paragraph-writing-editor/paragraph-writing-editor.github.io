@@ -2,7 +2,6 @@
 const text = ref('')
 
 const structure = computed(() => {
-  console.log('computed')
   return text.value
     // sections
     .trim()
