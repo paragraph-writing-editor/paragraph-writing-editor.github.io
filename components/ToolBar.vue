@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ClipboardEdit from 'vue-material-design-icons/ClipboardEditOutline.vue';
+import ClipboardPlus from 'vue-material-design-icons/ClipboardPlusOutline.vue';
 import ClipboardFile from 'vue-material-design-icons/ClipboardFileOutline.vue';
 import FileOutline from 'vue-material-design-icons/FileOutline.vue';
 </script>
@@ -12,7 +12,7 @@ import FileOutline from 'vue-material-design-icons/FileOutline.vue';
         <FileOutline />
       </IconButton>
       <IconButton aria-label="paste from clipboard" data-balloon-pos="right" @click="$emit('paste-click')">
-        <ClipboardEdit />
+        <ClipboardPlus />
       </IconButton>
       <IconPartition />
       <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
