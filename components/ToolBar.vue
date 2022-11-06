@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ClipboardTextPlay from 'vue-material-design-icons/ClipboardTextPlayOutline.vue';
 import ClipboardFile from 'vue-material-design-icons/ClipboardFileOutline.vue';
+import ContentCopy from 'vue-material-design-icons/ContentCopy.vue';
 import FileOutline from 'vue-material-design-icons/FileOutline.vue';
 </script>
 
@@ -8,15 +8,15 @@ import FileOutline from 'vue-material-design-icons/FileOutline.vue';
   <div class="toolbar-window">
     <div class="toolbar">
       <IconPartition />
-      <IconButton aria-label="new file" data-balloon-pos="right" @click="$emit('new-click')">
+      <IconButton aria-label="new text" data-balloon-pos="right" @click="$emit('new-click')">
         <FileOutline />
       </IconButton>
-      <IconButton aria-label="paste from clipboard" data-balloon-pos="right" @click="$emit('paste-click')">
-        <ClipboardTextPlay />
+      <IconButton aria-label="text in clipboard" data-balloon-pos="right" @click="$emit('paste-click')">
+        <ClipboardFile />
       </IconButton>
       <IconPartition />
       <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
-        <ClipboardFile />
+        <ContentCopy />
       </IconButton>
     </div>
     <div class="workspace">
