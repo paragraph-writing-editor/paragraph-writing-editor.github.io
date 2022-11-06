@@ -52,7 +52,7 @@ const pasteText = (e: Event) => {
   if (!(e instanceof ClipboardEvent)) return
   if (!(target instanceof HTMLDivElement)) return
   const clipboard = e.clipboardData.getData('text/plain')
-  insertText(clipboard)
+  insertText(clipboard.replace(/\r\n/g, '\n').trim())
   updateText(target)
 }
 
