@@ -10,10 +10,10 @@ const emit = defineEmits<{
 }>()
 
 /* NOTE:
- * innerText: 変更の有無を判定するためのテキスト
- * applyText: 変更を画面に反映するためのテキスト
- * applyKey:  変更を画面に反映するためのキー
- * areaRef:   反映後にフォーカスするための参照
+ * innerText: to determin if changes have been made
+ * applyText: to reflect changes on screen
+ * applyKey:  to reflect changes on screen
+ * areaRef:   to focus after reflection
  */
 const innerText = ref(props.modelValue)
 const applyText = ref(props.modelValue)
@@ -43,32 +43,50 @@ watch(modelValue, (newValue, oldValue) => {
 
 const inputText = useDebounceFn(({ target }: Event) => {
   if (!(target instanceof HTMLDivElement)) return
-  innerText.value = target.innerText
-  emit('update:modelValue', target.innerText)
+  updateText(target)
 })
 
 const pasteText = (e: Event) => {
+  e.preventDefault()
+  const { target } = e
   if (!(e instanceof ClipboardEvent)) return
+  if (!(target instanceof HTMLDivElement)) return
+  const clipboard = e.clipboardData.getData('text/plain')
+  insertText(clipboard)
+  updateText(target)
+}
+
+const keydonwEnter = (e: Event) => {
+  e.preventDefault()
   const { target } = e
   if (!(target instanceof HTMLDivElement)) return
-  // paste
-  e.preventDefault()
-  const clipboard = e.clipboardData.getData('text/plain')
+  const singleLfEnd = () =>
+    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
+  insertText('\n')
+  // NOTE: A single LF does not break the line.
+  if (singleLfEnd()) insertText('\n')
+  updateText(target)
+}
+
+function updateText(target: HTMLDivElement) {
+  innerText.value = target.innerText
+  // NOTE: A single LF is the same as an empty string.
+  emit('update:modelValue', target.innerText == '\n' ? '' : target.innerText)
+}
+
+function insertText(text: string) {
   const selection = window.getSelection()
   const range = selection.getRangeAt(0)
   range.deleteContents()
-  const node = document.createTextNode(clipboard)
+  const node = document.createTextNode(text)
   range.insertNode(node)
   selection.collapseToEnd()
-  // update
-  innerText.value = target.innerText
-  emit('update:modelValue', target.innerText)
 }
 </script>
 
 <template>
-  <div class="textarea" ref="areaRef" contentEditable="true" v-text="applyText" :key="applyKey" @input="inputText"
-    @paste="pasteText">
+  <div class="textarea" ref="areaRef" contentEditable="true" :key="applyKey" v-text="applyText"
+    v-on:keydown.enter="keydonwEnter" @input="inputText" @paste="pasteText">
   </div>
 </template>
 
