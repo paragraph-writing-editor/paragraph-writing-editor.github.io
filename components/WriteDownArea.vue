@@ -27,7 +27,7 @@ watch(modelValue, (newValue, oldValue) => {
     innerText.value = newValue
     applyText.value = newValue
     applyKey.value = Math.random()
-    nextTick(() => { 
+    nextTick(() => {
       areaRef.value.focus()
       if (newValue.length > 0) {
         const range = document.createRange()
@@ -69,7 +69,9 @@ const keydonwEnter = (e: Event) => {
 }
 
 function updateText(target: HTMLDivElement) {
-  innerText.value = target.innerText
+  // NOTE: A br tag may be created at the end.
+  const breakInsert = () => target.innerHTML.match(/<br( \/)?>$/)
+  if (!breakInsert()) innerText.value = target.innerText
   // NOTE: A single LF is the same as an empty string.
   emit('update:modelValue', target.innerText == '\n' ? '' : target.innerText)
 }
