@@ -34,8 +34,8 @@ const copyText = () => {
 }
 
 // DEBUG:
-watchEffect(() => console.log(text.value))
-watchEffect(() => console.log(structure.value))
+//watchEffect(() => console.log(text.value))
+//watchEffect(() => console.log(structure.value))
 </script>
 
 <template>
