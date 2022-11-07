@@ -32,7 +32,9 @@ watch(modelValue, (newValue, oldValue) => {
       if (newValue.length > 0) {
         const range = document.createRange()
         const selection = window.getSelection()
-        range.setStart(areaRef.value.firstChild, newValue.length)
+        // NOTE: A double LF is for display convenience.
+        const lfOffset = newValue.match(/\n\n$/)? -1: 0
+        range.setStart(areaRef.value.firstChild, newValue.length + lfOffset)
         range.collapse()
         selection.removeAllRanges()
         selection.addRange(range)
@@ -60,18 +62,21 @@ const keydonwEnter = (e: Event) => {
   e.preventDefault()
   const { target } = e
   if (!(target instanceof HTMLDivElement)) return
-  const singleLfEnd = () =>
-    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
   insertText('\n')
   // NOTE: A single LF does not break the line.
-  if (singleLfEnd()) insertText('\n')
-  updateText(target)
+  const singleLfEnd = () =>
+    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
+  if (singleLfEnd()) {
+    insertText('\n')
+    updateText(target, false)
+  } else {
+    updateText(target)
+  }
 }
 
-function updateText(target: HTMLDivElement) {
-  // NOTE: A br tag may be created at the end.
-  const breakInsert = () => target.innerHTML.match(/<br( \/)?>$/)
-  if (!breakInsert()) innerText.value = target.innerText
+function updateText(target: HTMLDivElement, keepCaret = false) {
+  // NOTE: A double LF requires caret adjustment.
+  if (keepCaret) innerText.value = target.innerText
   // NOTE: A single LF is the same as an empty string.
   emit('update:modelValue', target.innerText == '\n' ? '' : target.innerText)
 }
