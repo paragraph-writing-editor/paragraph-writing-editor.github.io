@@ -12,15 +12,22 @@ const structure = computed(() => {
 </script>
 
 <template>
-  <div v-for="section in structure">
-    <p>
-      <span class="topic-sentence" v-if="section[0]">{{ section[0] }}</span>
-      <span v-if="section[1]">{{ section[1] }}</span>
-    </p>
+  <div class="view-window">
+    <div v-for="section in structure">
+      <p>
+        <span class="topic-sentence" v-if="section[0]">{{ section[0] }}</span>
+        <span v-if="section[1]">{{ section[1] }}</span>
+      </p>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.view-window {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
 .topic-sentence {
   color:darkred;
   font-weight: bold;
