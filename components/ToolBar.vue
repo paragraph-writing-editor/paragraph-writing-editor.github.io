@@ -2,6 +2,13 @@
 import ClipboardFile from 'vue-material-design-icons/ClipboardFileOutline.vue';
 import ContentCopy from 'vue-material-design-icons/ContentCopy.vue';
 import FileOutline from 'vue-material-design-icons/FileOutline.vue';
+import Redo from 'vue-material-design-icons/Redo.vue';
+import Undo from 'vue-material-design-icons/Undo.vue';
+
+const props = defineProps<{
+  canUndo: boolean
+  canRedo: boolean
+}>()
 </script>
 
 <template>
@@ -17,6 +24,13 @@ import FileOutline from 'vue-material-design-icons/FileOutline.vue';
       <IconPartition />
       <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
         <ContentCopy />
+      </IconButton>
+      <IconPartition />
+      <IconButton aria-label="undo" data-balloon-pos="right" :disabled="!canUndo" @click="$emit('undo-click')">
+        <Undo />
+      </IconButton>
+      <IconButton aria-label="redo" data-balloon-pos="right" :disabled="!canRedo" @click="$emit('redo-click')">
+        <Redo />
       </IconButton>
     </div>
     <div class="workspace">
