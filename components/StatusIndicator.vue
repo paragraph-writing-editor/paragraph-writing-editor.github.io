@@ -19,9 +19,9 @@ const status = computed(() => {
 <template>
   <div class="status-indicator-window">
     <div class="status-indicator">
-      {{ status.paragraphs.toLocaleString() }} paragraphs.
-      {{ status.sentences.toLocaleString() }} sentences.
-      {{ status.characters.toLocaleString() }} characters.
+      <span>{{ status.characters.toLocaleString() }} characters</span>
+      <span>{{ status.sentences.toLocaleString() }} sentences</span>
+      <span>{{ status.paragraphs.toLocaleString() }} paragraphs</span>
     </div>
     <div class="view-space">
       <slot></slot>
@@ -46,6 +46,11 @@ const status = computed(() => {
     line-height: 36px;
     font-size: small;
     color: gray;
+
+    span+span::before {
+      content: '/';
+      padding: 0 2px;
+    }
   }
 }
 </style>
