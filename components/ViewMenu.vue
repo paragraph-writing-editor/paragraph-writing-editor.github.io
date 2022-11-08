@@ -35,7 +35,7 @@ const changeMenu = () => {
         <SwapHorizontal /><span class="label">{{ label }}</span>
       </RoundedButton>
     </div>
-    <div class="workspace">
+    <div class="view-space">
       <slot></slot>
     </div>
   </div>
@@ -67,7 +67,7 @@ const changeMenu = () => {
     }
   }
 
-  .workspace {
+  .view-space {
     height: calc(100% - 48px);
   }
 }
