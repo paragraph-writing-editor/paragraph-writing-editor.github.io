@@ -79,7 +79,9 @@ const menu = ref('')
       </template>
       <template v-slot:right-page>
         <ViewMenu v-model:menu="menu">
-          <ReviewArea :structure="structure" :style="menu" />
+          <StatusIndicator :structure="structure">
+            <ReviewArea :structure="structure" :style="menu" />
+          </StatusIndicator>
         </ViewMenu>
       </template>
     </DoubleSpread>
