@@ -7,9 +7,9 @@ const props = defineProps<{
 
 <template>
   <div :class="['review-window', style].join(' ')">
-    <div v-for="section in structure" class="section">
-      <p class="paragraph">
-        <span v-for="sentence in section" class="sentence">{{ sentence }}</span>
+    <div class="section">
+      <p v-for="paragraph in structure" class="paragraph">
+        <span v-for="sentence in paragraph" class="sentence">{{ sentence }}</span>
       </p>
     </div>
   </div>
