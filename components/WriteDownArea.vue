@@ -74,7 +74,7 @@ const keydonwEnter = (e: Event) => {
   }
 }
 
-function updateText(target: HTMLDivElement, keepCaret = false) {
+function updateText(target: HTMLDivElement, keepCaret = true) {
   // NOTE: A double LF requires caret adjustment.
   if (keepCaret) innerText.value = target.innerText
   // NOTE: A single LF is the same as an empty string.
