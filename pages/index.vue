@@ -79,7 +79,7 @@ const menu = ref('')
       </template>
       <template v-slot:right-page>
         <ViewMenu v-model:menu="menu">
-          <TopicSentenceHighlightView :structure="structure" :style="menu" />
+          <ReviewArea :structure="structure" :style="menu" />
         </ViewMenu>
       </template>
     </DoubleSpread>

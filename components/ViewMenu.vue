@@ -11,7 +11,7 @@ const emit = defineEmits<{
 
 const menus = [
   'topic-sentence-highlights',
-  'topic-sentences-only',
+  'bulleted-topic-sentences',
 ]
 
 onMounted(() => {

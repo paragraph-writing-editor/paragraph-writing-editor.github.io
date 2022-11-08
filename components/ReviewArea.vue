@@ -23,7 +23,7 @@ const props = defineProps<{
   }
 }
 
-.topic-sentences-only {
+.bulleted-topic-sentences {
   p {
     display: list-item;
     list-style: inside;
