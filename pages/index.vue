@@ -61,6 +61,8 @@ const redo = () => {
   text.value = undoStack.value[undoStack.value.length - 1]
 }
 
+const menu = ref('')
+
 // DEBUG:
 //watchEffect(() => console.log(text.value))
 //watchEffect(() => console.log(structure.value))
@@ -76,7 +78,9 @@ const redo = () => {
         </ToolBar>
       </template>
       <template v-slot:right-page>
-        <TopicSentenceHighlightView :model-value="structure" />
+        <ViewMenu v-model:menu="menu">
+          <TopicSentenceHighlightView :structure="structure" :style="menu" />
+        </ViewMenu>
       </template>
     </DoubleSpread>
   </NuxtLayout>

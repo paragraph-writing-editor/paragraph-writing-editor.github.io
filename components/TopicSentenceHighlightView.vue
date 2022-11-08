@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: string[][]
+  structure: string[][]
+  style: string
 }>()
 </script>
 
 <template>
-  <div class="topic-sentence-highlight-view">
-    <div v-for="section in modelValue" class="section">
+  <div :class="['review-window', style].join(' ')">
+    <div v-for="section in structure" class="section">
       <p class="paragraph">
         <span v-for="sentence in section" class="sentence">{{ sentence }}</span>
       </p>
@@ -15,15 +16,29 @@ const props = defineProps<{
 </template>
 
 <style scoped lang="scss">
-.topic-sentence-highlight-view {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-
+.topic-sentence-highlights {
   .sentence:first-child {
     color: darkred;
     font-weight: bold;
   }
+}
+
+.topic-sentences-only {
+  p {
+    display: list-item;
+    list-style: inside;
+    padding-left: 1em;
+    text-indent: -1em;
+    .sentence:not(:first-child) {
+      display: none;
+    }
+  }
+}
+
+.review-window {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
 
   // section
   &>*:first-child {
@@ -35,7 +50,7 @@ const props = defineProps<{
   }
 }
 
-.topic-sentence-highlight-view {
+.review-window {
   scrollbar-width: none;
   -ms-overflow-style: none;
 
