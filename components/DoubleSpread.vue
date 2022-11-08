@@ -12,13 +12,14 @@
 <style scoped lang="scss">
 .pages {
   display: flex;
-  height: 100vh;
+  height: 100%;
 
   &>* {
     box-sizing: border-box;
     width: 50%;
     height: 100%;
     padding: 8px;
+    padding-bottom: 1px;
   }
 }
 </style>

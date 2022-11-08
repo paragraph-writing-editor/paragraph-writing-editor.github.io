@@ -65,21 +65,19 @@ const menu = ref('')
 </script>
 
 <template>
-  <NuxtLayout>
-    <DoubleSpread>
-      <template v-slot:left-page>
-        <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @paste-click="pasteText" @copy-click="copyText"
-          @undo-click="undo" @redo-click="redo">
-          <WriteDownArea v-model="text" />
-        </ToolBar>
-      </template>
-      <template v-slot:right-page>
-        <ViewMenu v-model:menu="menu">
-          <StatusIndicator :structure="structure">
-            <ReviewArea :structure="structure" :style="menu" />
-          </StatusIndicator>
-        </ViewMenu>
-      </template>
-    </DoubleSpread>
-  </NuxtLayout>
+  <DoubleSpread>
+    <template v-slot:left-page>
+      <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @paste-click="pasteText" @copy-click="copyText"
+        @undo-click="undo" @redo-click="redo">
+        <WriteDownArea v-model="text" />
+      </ToolBar>
+    </template>
+    <template v-slot:right-page>
+      <ViewMenu v-model:menu="menu">
+        <StatusIndicator :structure="structure">
+          <ReviewArea :structure="structure" :style="menu" />
+        </StatusIndicator>
+      </ViewMenu>
+    </template>
+  </DoubleSpread>
 </template>
