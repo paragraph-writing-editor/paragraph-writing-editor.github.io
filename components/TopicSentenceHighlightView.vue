@@ -2,34 +2,45 @@
 const props = defineProps<{
   modelValue: string[][]
 }>()
-
-const structure = computed(() => {
-  return props.modelValue.map((it) => {
-    if (it.length < 2) return it
-    return [it[0]].concat([it.slice(1).join('')])
-  })
-})
 </script>
 
 <template>
-  <div class="view-window">
-    <div v-for="section in structure">
-      <p>
-        <span class="topic-sentence" v-if="section[0]">{{ section[0] }}</span>
-        <span v-if="section[1]">{{ section[1] }}</span>
+  <div class="topic-sentence-highlight-view">
+    <div v-for="section in modelValue" class="section">
+      <p class="paragraph">
+        <span v-for="sentence in section" class="sentence">{{ sentence }}</span>
       </p>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.view-window {
+.topic-sentence-highlight-view {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+
+  .sentence:first-child {
+    color: darkred;
+    font-weight: bold;
+  }
+
+  // section
+  &>*:first-child {
+    margin-top: 0;
+    // paragraph
+    &>*:first-child {
+      margin-top: 0;
+    }
+  }
 }
-.topic-sentence {
-  color:darkred;
-  font-weight: bold;
+
+.topic-sentence-highlight-view {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
