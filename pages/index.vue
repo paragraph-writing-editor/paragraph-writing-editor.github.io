@@ -62,10 +62,6 @@ const redo = () => {
 }
 
 const menu = ref('')
-
-// DEBUG:
-//watchEffect(() => console.log(text.value))
-//watchEffect(() => console.log(structure.value))
 </script>
 
 <template>
