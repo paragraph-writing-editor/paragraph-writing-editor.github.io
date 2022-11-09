@@ -7,7 +7,10 @@ export default defineNuxtConfig({
         { name: 'description', content: 'A tool for improving your writing.' },
         { name: 'keywords', content: 'paragraph writing,editor,polishing,tool,パラグラフライティング,エディタ,推敲,ツール' }
       ],
-      link: [{ rel: 'stylesheet', href: 'https://unpkg.com/balloon-css/balloon.min.css' }]
+      link: [
+        { rel: 'icon', type: 'image/vnd.microsoft.icon', href: '/favicon.ico' },
+        { rel: 'stylesheet', href: 'https://unpkg.com/balloon-css/balloon.min.css' }
+      ]
     }
   }
 })
