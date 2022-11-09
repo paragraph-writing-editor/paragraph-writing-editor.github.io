@@ -22,11 +22,11 @@ body {
   width: 100%;
   height: 100%;
 
-  .main {
+  &>.main {
     height: calc(100vh - 48px);
   }
 
-  .title {
+  &>.title {
     box-sizing: border-box;
     height: 48px;
     padding: 8px;
@@ -35,7 +35,7 @@ body {
     color: white;
     background-color: lightgray;
 
-    .name {
+    &>.name {
       margin: 0;
       font-size: inherit;
       font-weight: bold;
@@ -43,7 +43,7 @@ body {
       font-style: oblique;
     }
 
-    .description {
+    &>.description {
       margin-left: 20px;
       font-size: small;
     }
