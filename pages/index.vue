@@ -10,7 +10,10 @@ const structure = computed(() => {
     // sentences
     .map((it) => {
       return it
-        .replace(/。/g, '。\n')
+        .replace(/(。|\U+ff0e)/g, '$1\n')
+        // NOTE: \U+ff0e (full-width dot)
+        .replace(/(\.[\"\']? )/g, '$1\n')
+        // NOTE: `."` is also end of sentence
         .trim()
         .split('\n')
         .filter((s) => s.length)
