@@ -54,8 +54,29 @@ const pasteText = (e: Event) => {
   if (!(e instanceof ClipboardEvent)) return
   if (!(target instanceof HTMLDivElement)) return
   const clipboard = e.clipboardData.getData('text/plain')
-  insertText(clipboard.replace(/\r\n/g, '\n').trim())
-  updateText(target)
+  insertText(clipboard.replace(/\r\n/g, '\n'))
+  const singleLfEnd = () =>
+    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
+  if (singleLfEnd()) {
+    target.textContent = target.innerText.replace(/\n$/, '')
+    updateText(target, false)
+  } else {
+    updateText(target)
+  }
+}
+
+const cutText = (e: Event) => {
+  e.preventDefault()
+  const { target } = e
+  if (!(e instanceof ClipboardEvent)) return
+  if (!(target instanceof HTMLDivElement)) return
+  extractText()
+  const singleLfEnd = () =>
+    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
+  if (singleLfEnd()) {
+    insertText('\n')
+    updateText(target, false)
+  }
 }
 
 const keydonwEnter = (e: Event) => {
@@ -89,11 +110,18 @@ function insertText(text: string) {
   range.insertNode(node)
   selection.collapseToEnd()
 }
+
+function extractText() {
+  const selection = window.getSelection()
+  const range = selection.getRangeAt(0)
+  const contents = range.extractContents()
+  navigator.clipboard.writeText(contents.textContent.replace(/\r\n/g, '\n'))
+}
 </script>
 
 <template>
   <div class="textarea" ref="areaRef" contentEditable="true" :key="applyKey" v-text="applyText"
-    v-on:keydown.enter="keydonwEnter" @input="inputText" @paste="pasteText">
+    v-on:keydown.enter="keydonwEnter" @input="inputText" @cut="cutText" @paste="pasteText">
   </div>
 </template>
 
