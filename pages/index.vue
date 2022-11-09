@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const text = ref('')
-
+const menu = ref('')
 const structure = computed(() => {
   return text.value
     // sections
@@ -24,7 +24,7 @@ const clearText = () => {
   text.value = ''
 }
 
-const pasteText = async () => {
+const resetWithClipboard = async () => {
   const clipboard = await navigator.clipboard.readText()
   if (clipboard.trim().length > 0)
     text.value = clipboard.replace(/\r\n/g, '\n').trim()
@@ -63,15 +63,13 @@ const redo = () => {
   undoStack.value.push(extractedText)
   text.value = undoStack.value[undoStack.value.length - 1]
 }
-
-const menu = ref('')
 </script>
 
 <template>
   <DoubleSpread>
     <template v-slot:left-page>
-      <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @paste-click="pasteText" @copy-click="copyText"
-        @undo-click="undo" @redo-click="redo">
+      <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @clipboard-click="resetWithClipboard"
+        @copy-click="copyText" @undo-click="undo" @redo-click="redo">
         <WriteDownArea v-model="text" />
       </ToolBar>
     </template>

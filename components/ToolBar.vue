@@ -18,7 +18,7 @@ const props = defineProps<{
       <IconButton aria-label="new text" data-balloon-pos="right" @click="$emit('new-click')">
         <FileOutline />
       </IconButton>
-      <IconButton aria-label="text in clipboard" data-balloon-pos="right" @click="$emit('paste-click')">
+      <IconButton aria-label="text in clipboard" data-balloon-pos="right" @click="$emit('clipboard-click')">
         <ClipboardFile />
       </IconButton>
       <IconPartition />
