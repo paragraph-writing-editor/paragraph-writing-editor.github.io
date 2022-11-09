@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/shared';
+import { endsWithSingleLf, trimTrailingLf } from '../utils/elementUtil';
+import { insertText, extractText } from '../utils/selectionUtil';
 
 const props = defineProps<{
   modelValue: string
@@ -33,7 +35,7 @@ watch(modelValue, (newValue, oldValue) => {
         const range = document.createRange()
         const selection = window.getSelection()
         // NOTE: A double LF is for display convenience.
-        const lfOffset = newValue.match(/\n\n$/)? -1: 0
+        const lfOffset = newValue.match(/\n\n$/) ? -1 : 0
         range.setStart(areaRef.value.firstChild, newValue.length + lfOffset)
         range.collapse()
         selection.removeAllRanges()
@@ -55,14 +57,7 @@ const pasteText = (e: Event) => {
   if (!(target instanceof HTMLDivElement)) return
   const clipboard = e.clipboardData.getData('text/plain')
   insertText(clipboard.replace(/\r\n/g, '\n'))
-  const singleLfEnd = () =>
-    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
-  if (singleLfEnd()) {
-    target.textContent = target.innerText.replace(/\n$/, '')
-    updateText(target, false)
-  } else {
-    updateText(target)
-  }
+  adjustTrailingLf(target, () => trimTrailingLf(target))
 }
 
 const cutText = (e: Event) => {
@@ -71,12 +66,7 @@ const cutText = (e: Event) => {
   if (!(e instanceof ClipboardEvent)) return
   if (!(target instanceof HTMLDivElement)) return
   extractText()
-  const singleLfEnd = () =>
-    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
-  if (singleLfEnd()) {
-    insertText('\n')
-    updateText(target, false)
-  }
+  adjustTrailingLf(target, () => insertText('\n'))
 }
 
 const keydonwEnter = (e: Event) => {
@@ -84,15 +74,7 @@ const keydonwEnter = (e: Event) => {
   const { target } = e
   if (!(target instanceof HTMLDivElement)) return
   insertText('\n')
-  // NOTE: A single LF does not break the line.
-  const singleLfEnd = () =>
-    target.innerText == '\n' || target.innerText.match(/[^\n]\n$/)
-  if (singleLfEnd()) {
-    insertText('\n')
-    updateText(target, false)
-  } else {
-    updateText(target)
-  }
+  adjustTrailingLf(target, () => insertText('\n'))
 }
 
 function updateText(target: HTMLDivElement, keepCaret = true) {
@@ -102,20 +84,13 @@ function updateText(target: HTMLDivElement, keepCaret = true) {
   emit('update:modelValue', target.innerText == '\n' ? '' : target.innerText)
 }
 
-function insertText(text: string) {
-  const selection = window.getSelection()
-  const range = selection.getRangeAt(0)
-  range.deleteContents()
-  const node = document.createTextNode(text)
-  range.insertNode(node)
-  selection.collapseToEnd()
-}
-
-function extractText() {
-  const selection = window.getSelection()
-  const range = selection.getRangeAt(0)
-  const contents = range.extractContents()
-  navigator.clipboard.writeText(contents.textContent.replace(/\r\n/g, '\n'))
+function adjustTrailingLf(target: HTMLDivElement, fn: () => void) {
+  if (endsWithSingleLf(target)) {
+    fn()
+    updateText(target, false)
+  } else {
+    updateText(target)
+  }
 }
 </script>
 
