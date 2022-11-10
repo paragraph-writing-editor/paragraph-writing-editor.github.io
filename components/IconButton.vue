@@ -1,5 +1,22 @@
+<script setup lang="ts">
+const props = withDefaults(defineProps<{
+  small?: boolean
+  transparent?: boolean
+}>(),{
+  small: false,
+  transparent: false
+})
+
+const classes = computed(() => {
+  const list = ['icon-button']
+  if (props.small) list.push('icon-button--small')
+  if (props.transparent) list.push('icon-button--transparent')
+  return list
+})
+</script>
+
 <template>
-  <button class="icon-button">
+  <button :class="classes.join(' ')">
     <slot></slot>
   </button>
 </template>
@@ -28,6 +45,25 @@
 
   &+.icon-button {
     margin-left: 4px;
+  }
+
+  &--small {
+    width: 24px;
+    height: 24px;
+
+    :deep(svg) {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &--transparent {
+    background-color: inherit;
+    box-shadow: 0.5px 0.5px 2px gray;
+
+    &:hover {
+      background-color: inherit;
+    }
   }
 }
 </style>
