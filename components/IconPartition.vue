@@ -1,6 +1,6 @@
 <template>
   <button class="icon-partition">
-      <slot>|</slot>
+    <slot>|</slot>
   </button>
 </template>
 

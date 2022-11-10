@@ -29,6 +29,7 @@ const props = defineProps<{
     list-style: inside;
     padding-left: 1em;
     text-indent: -1em;
+
     .sentence:not(:first-child) {
       display: none;
     }
@@ -43,6 +44,7 @@ const props = defineProps<{
   // section
   &>*:first-child {
     margin-top: 0;
+
     // paragraph
     &>*:first-child {
       margin-top: 0;

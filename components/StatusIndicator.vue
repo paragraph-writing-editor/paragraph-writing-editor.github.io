@@ -30,7 +30,8 @@ const status = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.status-indicator-window, .view-space {
+.status-indicator-window,
+.view-space {
   width: 100%;
   height: 100%;
 }
