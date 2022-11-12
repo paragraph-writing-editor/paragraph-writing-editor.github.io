@@ -1,42 +1,13 @@
-# Nuxt 3 Minimal Starter
+# Paragraph Writing Editor
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+[Try it out!](https://paragraph-writing-editor.github.io/)
 
-## Setup
+## What is this
 
-Make sure to install the dependencies:
+A tool for improving your writing. 
 
-```bash
-# yarn
-yarn install
+## How to use
 
-# npm
-npm install
-
-# pnpm
-pnpm install --shamefully-hoist
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+1. Write on the left page.
+1. Review on the right page.
+1. Feedback to the left page.
