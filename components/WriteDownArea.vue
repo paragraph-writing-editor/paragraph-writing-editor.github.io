@@ -69,7 +69,9 @@ const cutText = (e: Event) => {
   adjustTrailingLf(target, () => insertText('\n'))
 }
 
+const composing = ref(false)
 const keydonwEnter = (e: Event) => {
+  if (composing.value) return
   e.preventDefault()
   const { target } = e
   if (!(target instanceof HTMLDivElement)) return
@@ -96,7 +98,8 @@ function adjustTrailingLf(target: HTMLDivElement, fn: () => void) {
 
 <template>
   <div class="textarea" ref="areaRef" contentEditable="true" :key="applyKey" v-text="applyText"
-    v-on:keydown.enter="keydonwEnter" @input="inputText" @cut="cutText" @paste="pasteText">
+    v-on:keydown.enter="keydonwEnter" @input="inputText" @cut="cutText" @paste="pasteText"
+    @compositionstart="composing = true" @compositionend="composing = false">
   </div>
 </template>
 
