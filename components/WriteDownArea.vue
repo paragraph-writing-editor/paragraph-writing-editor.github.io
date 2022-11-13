@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/shared';
 import { endsWithSingleLf, trimTrailingLf } from '../utils/elementUtil';
-import { insertText, extractText } from '../utils/selectionUtil';
+import { insertText, extractText, moveCursor } from '../utils/selectionUtil';
 
 const props = defineProps<{
   modelValue: string
@@ -32,14 +32,9 @@ watch(modelValue, (newValue, oldValue) => {
     nextTick(() => {
       areaRef.value.focus()
       if (newValue.length > 0) {
-        const range = document.createRange()
-        const selection = window.getSelection()
         // NOTE: A double LF is for display convenience.
         const lfOffset = newValue.match(/\n\n$/) ? -1 : 0
-        range.setStart(areaRef.value.firstChild, newValue.length + lfOffset)
-        range.collapse()
-        selection.removeAllRanges()
-        selection.addRange(range)
+        moveCursor(areaRef.value.firstChild, newValue.length + lfOffset)
       }
     })
   }

@@ -13,3 +13,12 @@ export function extractText() {
   const contents = range.extractContents()
   navigator.clipboard.writeText(contents.textContent)
 }
+
+export function moveCursor(node: Node, offset: number) {
+  const range = document.createRange()
+  const selection = window.getSelection()
+  range.setStart(node, offset)
+  range.collapse()
+  selection.removeAllRanges()
+  selection.addRange(range)
+}
