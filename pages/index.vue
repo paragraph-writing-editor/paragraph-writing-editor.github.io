@@ -70,7 +70,7 @@ const redo = () => {
     <template v-slot:left-page>
       <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @clipboard-click="resetWithClipboard"
         @copy-click="copyText" @undo-click="undo" @redo-click="redo">
-        <WriteDownArea v-model="text" />
+        <WriteDownAreaLite v-model="text" />
       </ToolBar>
     </template>
     <template v-slot:right-page>

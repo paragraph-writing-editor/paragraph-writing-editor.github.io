@@ -10,6 +10,10 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/vnd.microsoft.icon', href: '/favicon.ico' },
         { rel: 'stylesheet', href: 'https://unpkg.com/balloon-css/balloon.min.css' }
+      ],
+      script: [
+        { async: true, src: 'https://www.googletagmanager.com/gtag/js?id=G-XJ7JERX61H' },
+        { innerHTML: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-XJ7JERX61H');` }
       ]
     }
   }
