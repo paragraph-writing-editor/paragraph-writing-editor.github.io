@@ -2774,6 +2774,11 @@ node-releases@^2.0.6:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.6.tgz#8a7088c63a55e493845683ebf3c828d8c51c5503"
   integrity sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==
 
+node-snackbar@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/node-snackbar/-/node-snackbar-0.1.16.tgz#72baa02d40afc4dfe5621137850b80246d8078d5"
+  integrity sha512-3s43QMKgABXdnqUfpKAXG+WlvS8bbuO6n6LAOmmLNZs87CGdpexqfGYCktFVi9NHFgREwNJARgeVTLOFAf2MQg==
+
 nopt@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-5.0.0.tgz#530942bb58a512fccafe53fe210f13a25355dc88"
