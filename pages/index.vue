@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Snackbar from 'node-snackbar'
+
 const text = ref('')
 const menu = ref('')
 const structure = computed(() => {
@@ -33,7 +35,11 @@ const resetWithClipboard = async () => {
 const copyText = () => {
   if (text.value.trim().length > 0)
     navigator.clipboard.writeText(text.value)
-      .then(() => window.alert("text was copied to clipboard"))
+      .then(() => Snackbar.show({
+        pos: 'top-center',
+        text: 'text was copied to clipboard',
+        actionText: 'OK'
+      }))
 }
 
 const undoStack = ref([text.value])
@@ -82,3 +88,7 @@ const redo = () => {
     </template>
   </DoubleSpread>
 </template>
+
+<style>
+@import 'node-snackbar/dist/snackbar.min.css';
+</style>
