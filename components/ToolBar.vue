@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import ClipboardFile from 'vue-material-design-icons/ClipboardFileOutline.vue';
-import ContentCopy from 'vue-material-design-icons/ContentCopy.vue';
+import ContentCopy from 'vue-material-design-icons/ClipboardEditOutline.vue';
 import FileOutline from 'vue-material-design-icons/FileOutline.vue';
+import Folder from 'vue-material-design-icons/FolderOutline.vue';
 import Redo from 'vue-material-design-icons/Redo.vue';
+import Save from 'vue-material-design-icons/ContentSaveOutline.vue';
 import Undo from 'vue-material-design-icons/Undo.vue';
 
 const props = defineProps<{
@@ -18,12 +20,19 @@ const props = defineProps<{
       <IconButton aria-label="new text" data-balloon-pos="right" @click="$emit('new-click')">
         <FileOutline />
       </IconButton>
+      <IconPartition />
       <IconButton aria-label="text in clipboard" data-balloon-pos="right" @click="$emit('clipboard-click')">
         <ClipboardFile />
       </IconButton>
-      <IconPartition />
       <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
         <ContentCopy />
+      </IconButton>
+      <IconPartition />
+      <IconButton aria-label="texts in local storage" data-balloon-pos="right" @click="$emit('folder-click')">
+        <Folder />
+      </IconButton>
+      <IconButton aria-label="save to local storage" data-balloon-pos="right" @click="$emit('save-click')">
+        <Save />
       </IconButton>
       <IconPartition />
       <IconButton aria-label="undo" data-balloon-pos="right" :disabled="!canUndo" @click="$emit('undo-click')">
