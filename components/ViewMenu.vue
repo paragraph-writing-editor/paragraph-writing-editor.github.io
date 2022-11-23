@@ -31,9 +31,9 @@ const changeMenu = () => {
 <template>
   <div class="view-menu-window">
     <div class="view-menu">
-      <RoundedButton @click="changeMenu">
+      <div class="imitation-button" @click="changeMenu">
         <SwapHorizontal /><span class="label">{{ label }}</span>
-      </RoundedButton>
+      </div>
     </div>
     <div class="view-space">
       <slot></slot>
@@ -52,18 +52,36 @@ const changeMenu = () => {
     height: 48px;
     display: flex;
 
-    .material-design-icon {
-      opacity: 25%;
+    .imitation-button {
+      height: 36px;
+      align-items: center;
+      display: inline-flex;
+      justify-content: center;
+      font-size: small;
+      cursor: pointer;
 
-      &+.label {
-        margin-left: 4px;
+      .material-design-icon {
+        opacity: 25%;
+
+        &+.label {
+          margin-left: 4px;
+        }
+      }
+
+      .label {
         letter-spacing: 1px;
         text-transform: uppercase;
       }
-    }
 
-    &>*:hover .material-design-icon {
-      opacity: 80%;
+      &:hover {
+        .material-design-icon {
+          opacity: 80%;
+        }
+
+        .label {
+          text-decoration: underline;
+        }
+      }
     }
   }
 
