@@ -2,7 +2,8 @@
 import {
   getDocSnapshotKeys,
   docSnapshotKeyToDate,
-  deleteDocSnapshots
+  deleteDocSnapshots,
+  getDocSnapshot
 } from '../utils/storageUtil';
 
 const props = defineProps<{
@@ -25,6 +26,12 @@ watch(dialog, (newDialog, oldDialog) => {
   if (newDialog && !oldDialog) {
     initialize()
   }
+})
+
+const texts = computed(() => {
+  const ret = {}
+  docs.value.forEach((key) => ret[key] = getDocSnapshot(key))
+  return ret
 })
 
 const load = (e: Event) => {
@@ -80,6 +87,7 @@ function initialize() {
                 {{ docSnapshotKeyToDate(key).toLocaleString().replace(/([^\d])([\d])([^\d])/g, '$10$2$3') }}
               </label>
             </p>
+            <p class="text">{{ texts[key] }}</p>
           </div>
         </div>
       </div>
@@ -101,10 +109,19 @@ label {
   .operation {
     float: right;
     visibility: hidden;
+
     a {
       text-decoration: underline;
       color: blue;
     }
+  }
+
+  .text {
+    padding-left: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+    height: calc(1.3em * 2);
   }
 
   &:hover {
