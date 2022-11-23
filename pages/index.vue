@@ -38,6 +38,11 @@ const resetWithClipboard = async () => {
     text.value = clipboard.replace(/\r\n/g, '\n').trim()
 }
 
+const folder = ref(false)
+const openFolder = () => {
+  folder.value = true
+}
+
 const saveText = () => {
   if (text.value.trim().length > 0) {
     const latestKey = getLatestDocSnapshotKey()
@@ -96,9 +101,10 @@ const redo = () => {
   <DoubleSpread>
     <template v-slot:left-page>
       <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @clipboard-click="resetWithClipboard"
-        @save-click="saveText" @copy-click="copyText" @undo-click="undo" @redo-click="redo">
+        @folder-click="openFolder" @save-click="saveText" @copy-click="copyText" @undo-click="undo" @redo-click="redo">
         <WriteDownAreaLite v-model="text" />
       </ToolBar>
+      <FolderDialog v-model:dialog="folder" />
     </template>
     <template v-slot:right-page>
       <ViewMenu v-model:menu="menu">

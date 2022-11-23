@@ -2,13 +2,15 @@ const DOC_SNAPSHOT_PREFIX = 'doc.snapshot'
 const DOC_SNAPSHOT_SEPARATOR = '#'
 
 export function getLatestDocSnapshotKey(): string | null {
-  const snapshotKeys = Object.keys(localStorage)
+  const snapshotKeys = getDocSnapshotKeys()
+  if (snapshotKeys.length === 0) return null
+  return snapshotKeys[0]
+}
+
+export function getDocSnapshotKeys(): string[] {
+  return Object.keys(localStorage)
     .filter((key: string) => key.startsWith(DOC_SNAPSHOT_PREFIX))
-    if (snapshotKeys.length === 0) return null
-  const latestTime = snapshotKeys
-    .map((key: string) => Number(key.split('#')[1]))
-    .sort((a: number, b: number) => b - a)[0]
-  return DOC_SNAPSHOT_PREFIX + DOC_SNAPSHOT_SEPARATOR + latestTime
+    .sort((a: string, b: string) => b.localeCompare(a))
 }
 
 export function getDocSnapshot(key: string): string | null {
@@ -25,6 +27,13 @@ export function deleteDocSnapshots(keys: string[]) {
   keys.forEach((key: string) => {
     if (validateDocSnapshotKey(key)) localStorage.removeItem(key)
   })
+}
+
+export function docSnapshotKeyToDate(key: string): Date {
+  const time = Number(key.split(DOC_SNAPSHOT_SEPARATOR)[1])
+  const date = new Date()
+  date.setTime(time)
+  return date
 }
 
 function validateDocSnapshotKey(key: string): boolean {

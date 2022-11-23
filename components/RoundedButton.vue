@@ -1,5 +1,21 @@
+<script setup lang="ts">
+const props = withDefaults(defineProps<{
+  disabled?: boolean
+  destroy?: boolean
+}>(), {
+  disabled: false,
+  destroy: false
+})
+
+const classes = computed(() => {
+  const list = ['rounded-button']
+  if (props.destroy) list.push('rounded-button--destroy')
+  return list
+})
+</script>
+
 <template>
-  <button class="rounded-button">
+  <button :class="classes.join(' ')" :disabled="props.disabled">
     <slot></slot>
   </button>
 </template>
@@ -18,13 +34,24 @@
   box-shadow: 1px 1px 2px lightgray;
   cursor: pointer;
 
-  &:hover {
-    color: inherit;
-    box-shadow: 2px 2px 4px gray;
+  &--destroy {
+    background-color: crimson;
+    color: white;
   }
 
-  &:active {
-    box-shadow: 1px 1px 2px gray;
+  &[disabled] {
+    cursor: default;
+    opacity: 0.2;
+  }
+
+  &:not([disabled]) {
+    &:hover {
+      box-shadow: 2px 2px 4px gray;
+    }
+
+    &:active {
+      box-shadow: 1px 1px 2px gray;
+    }
   }
 
   &+.rounded-button {
