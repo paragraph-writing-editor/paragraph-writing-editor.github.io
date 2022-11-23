@@ -11,6 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:dialog', value: boolean): void
+  (e: 'load', value: string): void
 }>()
 
 const updateDialog = (dialog: boolean) => {
@@ -25,6 +26,12 @@ watch(dialog, (newDialog, oldDialog) => {
     initialize()
   }
 })
+
+const load = (e: Event) => {
+  const key = (e.target as HTMLAnchorElement).dataset['key']
+  emit('load', key)
+  emit('update:dialog', false)
+}
 
 const remove = () => {
   deleteDocSnapshots(checkedDocs.value)
@@ -53,22 +60,26 @@ function initialize() {
         <p>no texts exist</p>
       </div>
       <div v-if="docs.length">
-        <div>
+        <p>
           <RoundedButton destroy :disabled="!checkedDocs.length" @click="remove">Remove selected items</RoundedButton>
-        </div>
-        <div>
+        </p>
+        <p>
           <a @click="selectAll">
             <input type="checkbox" :checked="selectedAll" />
             Select all
           </a>
-        </div>
-        <hr />
+        </p>
         <div>
-          <div v-for="key in docs" :key="key">
-            <label>
-              <input type="checkbox" :value="key" v-model="checkedDocs" />
-              {{ docSnapshotKeyToDate(key).toLocaleString().replace(/([^\d])([\d])([^\d])/g, '$10$2$3') }}
-            </label>
+          <div class="item" v-for="key in docs" :key="key">
+            <div class="operation">
+              <a @click="load" :data-key="key">Load from this</a>
+            </div>
+            <p>
+              <label>
+                <input type="checkbox" :value="key" v-model="checkedDocs" />
+                {{ docSnapshotKeyToDate(key).toLocaleString().replace(/([^\d])([\d])([^\d])/g, '$10$2$3') }}
+              </label>
+            </p>
           </div>
         </div>
       </div>
@@ -83,6 +94,23 @@ label {
 
   input {
     cursor: pointer;
+  }
+}
+
+.item {
+  .operation {
+    float: right;
+    visibility: hidden;
+    a {
+      text-decoration: underline;
+      color: blue;
+    }
+  }
+
+  &:hover {
+    .operation {
+      visibility: visible;
+    }
   }
 }
 </style>

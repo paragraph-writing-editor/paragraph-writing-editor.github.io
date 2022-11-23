@@ -43,6 +43,10 @@ const openFolder = () => {
   folder.value = true
 }
 
+const load = (key: string) => {
+  text.value = getDocSnapshot(key)
+}
+
 const saveText = () => {
   if (text.value.trim().length > 0) {
     const latestKey = getLatestDocSnapshotKey()
@@ -104,7 +108,7 @@ const redo = () => {
         @folder-click="openFolder" @save-click="saveText" @copy-click="copyText" @undo-click="undo" @redo-click="redo">
         <WriteDownAreaLite v-model="text" />
       </ToolBar>
-      <FolderDialog v-model:dialog="folder" />
+      <FolderDialog v-model:dialog="folder" @load="load" />
     </template>
     <template v-slot:right-page>
       <ViewMenu v-model:menu="menu">
