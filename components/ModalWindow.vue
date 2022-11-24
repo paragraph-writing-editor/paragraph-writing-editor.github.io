@@ -10,12 +10,10 @@ const emit = defineEmits<{
 }>()
 
 const close = () => {
-  console.log('update')
   emit('update:dialog', false)
 }
 
 const stop = (e: Event) => {
-  console.log('stop')
   e.stopPropagation()
 }
 </script>

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import Snackbar from 'node-snackbar';
+import {
+  postDocSnapshot,
+  getLatestDocSnapshotKey,
+  getDocSnapshot,
+  deleteDocSnapshots
+} from '../utils/storageUtil';
+
 const text = ref('')
 const menu = ref('')
 const structure = computed(() => {
@@ -30,10 +38,39 @@ const resetWithClipboard = async () => {
     text.value = clipboard.replace(/\r\n/g, '\n').trim()
 }
 
+const folder = ref(false)
+const openFolder = () => {
+  folder.value = true
+}
+
+const load = (key: string) => {
+  text.value = getDocSnapshot(key)
+}
+
+const textEmpty = computed(() => !text.value.trim().length)
+const saveText = () => {
+  if (!textEmpty.value) {
+    const latestKey = getLatestDocSnapshotKey()
+    if (latestKey != null && getDocSnapshot(latestKey)?.trim() === text.value.trim()) {
+      deleteDocSnapshots([latestKey])
+    }
+    postDocSnapshot(text.value)
+    Snackbar.show({
+      pos: 'bottom-center',
+      text: 'text was saved to local storage',
+      actionText: 'OK'
+    })
+  }
+}
+
 const copyText = () => {
-  if (text.value.trim().length > 0)
+  if (!textEmpty.value)
     navigator.clipboard.writeText(text.value)
-      .then(() => window.alert("text was copied to clipboard"))
+      .then(() => Snackbar.show({
+        pos: 'bottom-center',
+        text: 'text was copied to clipboard',
+        actionText: 'OK'
+      }))
 }
 
 const undoStack = ref([text.value])
@@ -68,10 +105,12 @@ const redo = () => {
 <template>
   <DoubleSpread>
     <template v-slot:left-page>
-      <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @clipboard-click="resetWithClipboard"
-        @copy-click="copyText" @undo-click="undo" @redo-click="redo">
+      <ToolBar :text-empty="textEmpty" :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText"
+        @clipboard-click="resetWithClipboard" @folder-click="openFolder" @save-click="saveText" @copy-click="copyText"
+        @undo-click="undo" @redo-click="redo">
         <WriteDownAreaLite v-model="text" />
       </ToolBar>
+      <FolderDialog v-model:dialog="folder" @load="load" />
     </template>
     <template v-slot:right-page>
       <ViewMenu v-model:menu="menu">
@@ -82,3 +121,7 @@ const redo = () => {
     </template>
   </DoubleSpread>
 </template>
+
+<style>
+@import 'node-snackbar/dist/snackbar.min.css';
+</style>
