@@ -8,6 +8,7 @@ import Save from 'vue-material-design-icons/ContentSaveOutline.vue';
 import Undo from 'vue-material-design-icons/Undo.vue';
 
 const props = defineProps<{
+  textEmpty: boolean
   canUndo: boolean
   canRedo: boolean
 }>()
@@ -24,14 +25,16 @@ const props = defineProps<{
       <IconButton aria-label="text in clipboard" data-balloon-pos="down" @click="$emit('clipboard-click')">
         <ClipboardFile />
       </IconButton>
-      <IconButton aria-label="copy to clipboard" data-balloon-pos="down" @click="$emit('copy-click')">
+      <IconButton aria-label="copy to clipboard" data-balloon-pos="down" :disabled="textEmpty"
+        @click="$emit('copy-click')">
         <ContentCopy />
       </IconButton>
       <IconPartition />
       <IconButton aria-label="texts in local storage" data-balloon-pos="down" @click="$emit('folder-click')">
         <Folder />
       </IconButton>
-      <IconButton aria-label="save to local storage" data-balloon-pos="down" @click="$emit('save-click')">
+      <IconButton aria-label="save to local storage" data-balloon-pos="down" :disabled="textEmpty"
+        @click="$emit('save-click')">
         <Save />
       </IconButton>
       <IconPartition />
