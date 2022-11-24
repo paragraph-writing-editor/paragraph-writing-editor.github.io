@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/shared';
-import { moveCursor } from '../utils/selectionUtil';
 
 const props = defineProps<{
   modelValue: string
@@ -22,12 +21,7 @@ watch(modelValue, (newValue, oldValue) => {
   const valueChange = () => innerText.value != newValue
   if (propsChange() && valueChange()) {
     innerText.value = newValue
-    nextTick(() => {
-      areaRef.value.focus()
-      if (newValue.length > 0) {
-        moveCursor(areaRef.value.firstChild, newValue.length)
-      }
-    })
+    nextTick(() => areaRef.value.focus())
   }
 })
 
