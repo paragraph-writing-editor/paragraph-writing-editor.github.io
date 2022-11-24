@@ -8,6 +8,7 @@ import Save from 'vue-material-design-icons/ContentSaveOutline.vue';
 import Undo from 'vue-material-design-icons/Undo.vue';
 
 const props = defineProps<{
+  textEmpty: boolean
   canUndo: boolean
   canRedo: boolean
 }>()
@@ -17,28 +18,30 @@ const props = defineProps<{
   <div class="toolbar-window">
     <div class="toolbar">
       <IconPartition />
-      <IconButton aria-label="new text" data-balloon-pos="right" @click="$emit('new-click')">
+      <IconButton aria-label="new text" data-balloon-pos="down" @click="$emit('new-click')">
         <FileOutline />
       </IconButton>
       <IconPartition />
-      <IconButton aria-label="text in clipboard" data-balloon-pos="right" @click="$emit('clipboard-click')">
+      <IconButton aria-label="text in clipboard" data-balloon-pos="down" @click="$emit('clipboard-click')">
         <ClipboardFile />
       </IconButton>
-      <IconButton aria-label="copy to clipboard" data-balloon-pos="right" @click="$emit('copy-click')">
+      <IconButton aria-label="copy to clipboard" data-balloon-pos="down" :disabled="textEmpty"
+        @click="$emit('copy-click')">
         <ContentCopy />
       </IconButton>
       <IconPartition />
-      <IconButton aria-label="texts in local storage" data-balloon-pos="right" @click="$emit('folder-click')">
+      <IconButton aria-label="texts in local storage" data-balloon-pos="down" @click="$emit('folder-click')">
         <Folder />
       </IconButton>
-      <IconButton aria-label="save to local storage" data-balloon-pos="right" @click="$emit('save-click')">
+      <IconButton aria-label="save to local storage" data-balloon-pos="down" :disabled="textEmpty"
+        @click="$emit('save-click')">
         <Save />
       </IconButton>
       <IconPartition />
-      <IconButton aria-label="undo" data-balloon-pos="right" :disabled="!canUndo" @click="$emit('undo-click')">
+      <IconButton aria-label="undo" data-balloon-pos="down" :disabled="!canUndo" @click="$emit('undo-click')">
         <Undo />
       </IconButton>
-      <IconButton aria-label="redo" data-balloon-pos="right" :disabled="!canRedo" @click="$emit('redo-click')">
+      <IconButton aria-label="redo" data-balloon-pos="down" :disabled="!canRedo" @click="$emit('redo-click')">
         <Redo />
       </IconButton>
     </div>

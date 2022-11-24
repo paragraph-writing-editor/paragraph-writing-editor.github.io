@@ -47,8 +47,9 @@ const load = (key: string) => {
   text.value = getDocSnapshot(key)
 }
 
+const textEmpty = computed(() => !text.value.trim().length)
 const saveText = () => {
-  if (text.value.trim().length > 0) {
+  if (!textEmpty.value) {
     const latestKey = getLatestDocSnapshotKey()
     if (latestKey != null && getDocSnapshot(latestKey)?.trim() === text.value.trim()) {
       deleteDocSnapshots([latestKey])
@@ -63,7 +64,7 @@ const saveText = () => {
 }
 
 const copyText = () => {
-  if (text.value.trim().length > 0)
+  if (!textEmpty.value)
     navigator.clipboard.writeText(text.value)
       .then(() => Snackbar.show({
         pos: 'bottom-center',
@@ -104,8 +105,9 @@ const redo = () => {
 <template>
   <DoubleSpread>
     <template v-slot:left-page>
-      <ToolBar :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText" @clipboard-click="resetWithClipboard"
-        @folder-click="openFolder" @save-click="saveText" @copy-click="copyText" @undo-click="undo" @redo-click="redo">
+      <ToolBar :text-empty="textEmpty" :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText"
+        @clipboard-click="resetWithClipboard" @folder-click="openFolder" @save-click="saveText" @copy-click="copyText"
+        @undo-click="undo" @redo-click="redo">
         <WriteDownAreaLite v-model="text" />
       </ToolBar>
       <FolderDialog v-model:dialog="folder" @load="load" />
