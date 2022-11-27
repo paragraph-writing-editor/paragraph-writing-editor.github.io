@@ -4,7 +4,7 @@ import {
   docSnapshotKeyToDate,
   deleteDocSnapshots,
   getDocSnapshot
-} from '../utils/storageUtil';
+} from '../utils/documentStorage';
 
 const props = defineProps<{
   dialog: boolean

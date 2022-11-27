@@ -5,7 +5,7 @@ import {
   getLatestDocSnapshotKey,
   getDocSnapshot,
   deleteDocSnapshots
-} from '../utils/storageUtil';
+} from '../utils/documentStorage';
 
 const text = ref('')
 const menu = ref('')
