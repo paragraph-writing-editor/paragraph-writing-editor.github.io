@@ -7,6 +7,8 @@ import {
   deleteDocSnapshots
 } from '../utils/documentStorage';
 
+const { settings } = useSentenceBoundaryDetectionSettings()
+
 const text = ref('')
 const menu = ref('')
 const structure = computed(() => {
@@ -17,11 +19,20 @@ const structure = computed(() => {
     .split('\n\n')
     // sentences
     .map((it) => {
-      return it
-        .replace(/(。|\U+ff0e)/g, '$1\n')
-        // NOTE: \U+ff0e (full-width dot)
-        .replace(/(\.[\"\']? )/g, '$1\n')
-        // NOTE: `."` is also end of sentence
+      const detections = [
+        settings.value.halfwidthDotSpace
+          ? (text: string) => text.replace(/(\. )/g, '$1\n') : (text: string) => text,
+        settings.value.halfwidthDotDoubleQuotationSpace
+          ? (text: string) => text.replace(/(\.\" )/g, '$1\n') : (text: string) => text,
+        settings.value.halfwidthDotSingleQuotationSpace
+          ? (text: string) => text.replace(/(\.\' )/g, '$1\n') : (text: string) => text,
+        settings.value.fullwidthDot // NOTE: U+ff0e (full-width dot)
+          ? (text: string) => text.replace(/(\uff0e)/g, '$1\n') : (text: string) => text,
+        settings.value.fullwidthSmallCircle
+          ? (text: string) => text.replace(/(。)/g, '$1\n') : (text: string) => text,
+      ]
+      return detections
+        .reduce((acc, fn) => fn(acc), it)
         .trim()
         .split('\n')
         .filter((s) => s.length)
