@@ -15,10 +15,6 @@ const emit = defineEmits<{
   (e: 'load', value: string): void
 }>()
 
-const updateDialog = (dialog: boolean) => {
-  emit('update:dialog', dialog)
-}
-
 const docs = ref([] as string[])
 const checkedDocs = ref([] as string[])
 const { dialog } = toRefs(props)
@@ -60,7 +56,7 @@ function initialize() {
 </script>
 
 <template>
-  <ModalWindow :dialog="props.dialog" @update:dialog="updateDialog">
+  <ModalWindow :dialog="props.dialog" @update:dialog="(v: boolean) => emit('update:dialog', v)">
     <section>
       <h2>Local Storage</h2>
       <div v-if="!docs.length">
