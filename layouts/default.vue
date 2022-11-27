@@ -21,11 +21,11 @@ const openSettingDialog = () => {
         <span class="description">A tool for improving your writing.</span>
         <span class="spacer"></span>
         <span class="menu">
-          <IconButton aria-label="informations" data-balloon-pos="up" small transparent @click="openInformationDialog">
-            <InformationVariant fillColor="white" />
-          </IconButton>
           <IconButton aria-label="settings" data-balloon-pos="up" small transparent @click="openSettingDialog">
             <Cog fillColor="white" />
+          </IconButton>
+          <IconButton aria-label="informations" data-balloon-pos="left" small transparent @click="openInformationDialog">
+            <InformationVariant fillColor="white" />
           </IconButton>
         </span>
       </div>
@@ -81,7 +81,7 @@ body {
     }
 
     &>.menu {
-      padding-right: 24px;
+      padding-right: 8px;
 
       button+button {
         margin-left: 8px;
