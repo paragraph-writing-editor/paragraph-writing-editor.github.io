@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getSettings, setSettings, objectSettingsToArray, arraySettingsToObject } from '../utils/settingStorage'
-
 const props = defineProps<{
   dialog: boolean
 }>()
@@ -9,21 +7,7 @@ const emit = defineEmits<{
   (e: 'update:dialog', value: boolean): void
 }>()
 
-const settings = useState('setting.sentenceBoundaryDetection', () =>
-  getSettings('sentenceBoundaryDetection', {
-    halfwidthDotSpace: true,
-    halfwidthDotDoubleQuotationSpace: true,
-    halfwidthDotSingleQuotationSpace: true,
-    fullwidthDot: true,
-    fullwidthSmallCircle: true,
-  })
-)
-
-const settingsSelection = ref(objectSettingsToArray(settings.value))
-watch(settingsSelection, (newSettings, _) => {
-  settings.value = arraySettingsToObject(newSettings, settings.value)
-  setSettings('sentenceBoundaryDetection', settings.value)
-})
+const { settingsSelection } = useSentenceBoundaryDetectionSettings()
 </script>
 
 <template>
