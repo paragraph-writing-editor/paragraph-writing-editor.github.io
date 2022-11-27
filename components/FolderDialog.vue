@@ -4,7 +4,7 @@ import {
   docSnapshotKeyToDate,
   deleteDocSnapshots,
   getDocSnapshot
-} from '../utils/storageUtil';
+} from '../utils/documentStorage';
 
 const props = defineProps<{
   dialog: boolean
@@ -15,12 +15,8 @@ const emit = defineEmits<{
   (e: 'load', value: string): void
 }>()
 
-const updateDialog = (dialog: boolean) => {
-  emit('update:dialog', dialog)
-}
-
 const docs = ref([] as string[])
-const checkedDocs = ref([] as string[])
+const docsSelection = ref([] as string[])
 const { dialog } = toRefs(props)
 watch(dialog, (newDialog, oldDialog) => {
   if (newDialog && !oldDialog) {
@@ -41,26 +37,26 @@ const load = (e: Event) => {
 }
 
 const remove = () => {
-  deleteDocSnapshots(checkedDocs.value)
+  deleteDocSnapshots(docsSelection.value)
   initialize()
 }
 
-const selectedAll = computed(() => checkedDocs.value.length == docs.value.length)
+const selectedAll = computed(() => docsSelection.value.length == docs.value.length)
 const selectAll = () => {
   if (selectedAll.value)
-    checkedDocs.value = []
+    docsSelection.value = []
   else
-    checkedDocs.value = docs.value
+    docsSelection.value = docs.value
 }
 
 function initialize() {
   docs.value = getDocSnapshotKeys()
-  checkedDocs.value = []
+  docsSelection.value = []
 }
 </script>
 
 <template>
-  <ModalWindow :dialog="props.dialog" @update:dialog="updateDialog">
+  <ModalWindow :dialog="props.dialog" @update:dialog="(v: boolean) => emit('update:dialog', v)">
     <section>
       <h2>Local Storage</h2>
       <div v-if="!docs.length">
@@ -68,7 +64,7 @@ function initialize() {
       </div>
       <div v-if="docs.length">
         <p>
-          <RoundedButton destroy :disabled="!checkedDocs.length" @click="remove">Remove selected items</RoundedButton>
+          <RoundedButton destroy :disabled="!docsSelection.length" @click="remove">Remove selected items</RoundedButton>
         </p>
         <p>
           <a @click="selectAll">
@@ -83,7 +79,7 @@ function initialize() {
             </div>
             <p>
               <label>
-                <input type="checkbox" :value="key" v-model="checkedDocs" />
+                <input type="checkbox" :value="key" v-model="docsSelection" />
                 {{ docSnapshotKeyToDate(key).toLocaleString().replace(/([^\d])([\d])([^\d])/g, '$10$2$3') }}
               </label>
             </p>
