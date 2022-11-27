@@ -31,4 +31,3 @@ export default function useSentenceBoundaryDetectionSettings(): {
 
   return { settings, settingsSelection }
 }
-
