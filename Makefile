@@ -10,6 +10,9 @@ deploy: build
 build: merge
 	yarn generate
 
-merge:
-	git fetch -p
+merge: rebase
 	git merge origin/main -m 'Merge remote-tracking branch 'origin/main' into release'
+
+rebase:
+	git fetch -p
+	git rebase origin/release
