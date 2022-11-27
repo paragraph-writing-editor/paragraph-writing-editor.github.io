@@ -1,6 +1,6 @@
 const SETTING_PREFIX = 'setting'
 
-export function getSettings(category: string, defaultSettings: object = {}): object {
+export function getSettings<T>(category: string, defaultSettings: T): T {
   const categoryPrefix = `${SETTING_PREFIX}.${category}`
   const ret = { ...defaultSettings }
   Object.keys(localStorage)
@@ -23,10 +23,10 @@ export function objectSettingsToArray(settings: object): string[] {
   return Object.keys(settings).filter((item) => settings[item])
 }
 
-export function arraySettingsToObject(settings: string[], src: object = {}): object {
-  const ret = { ...src }
+export function arraySettingsToObject<T>(settings: string[], src: T): T {
+  const ret = { ...src } as object
   for (const item in ret) ret[item] = settings.includes(item)
-  return ret
+  return ret as T
 }
 
 function isTrue(value: boolean | string): boolean {

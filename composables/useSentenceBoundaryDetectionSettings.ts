@@ -20,12 +20,12 @@ export default function useSentenceBoundaryDetectionSettings(): {
       halfwidthDotSingleQuotationSpace: true,
       fullwidthDot: true,
       fullwidthSmallCircle: true,
-    } as SentenceBoundaryDetectionSettings) as SentenceBoundaryDetectionSettings
+    } as SentenceBoundaryDetectionSettings)
   )
 
   const settingsSelection = ref(objectSettingsToArray(settings.value))
   watch(settingsSelection, (newSettings, _) => {
-    settings.value = arraySettingsToObject(newSettings, settings.value) as SentenceBoundaryDetectionSettings
+    settings.value = arraySettingsToObject(newSettings, settings.value)
     setSettings('sentenceBoundaryDetection', settings.value)
   })
 
