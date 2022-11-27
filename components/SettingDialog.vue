@@ -54,6 +54,14 @@ const { settingsSelection } = useSentenceBoundaryDetectionSettings()
 </template>
 
 <style scoped lang="scss">
+label {
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+  }
+}
+
 .code {
   margin-left: 4px;
   background-color: #efefef;
