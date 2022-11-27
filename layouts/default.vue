@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import Cog from 'vue-material-design-icons/CogOutline.vue';
 import InformationVariant from 'vue-material-design-icons/InformationVariant.vue';
 
-const dialog = ref(false)
-const openDialog = () => {
-  dialog.value = true
+const informationDialog = ref(false)
+const openInformationDialog = () => {
+  informationDialog.value = true
+}
+
+const settingDialog = ref(false)
+const openSettingDialog = () => {
+  settingDialog.value = true
 }
 </script>
 
@@ -15,7 +21,10 @@ const openDialog = () => {
         <span class="description">A tool for improving your writing.</span>
         <span class="spacer"></span>
         <span class="menu">
-          <IconButton aria-label="informations" data-balloon-pos="left" small transparent @click="openDialog">
+          <IconButton aria-label="settings" data-balloon-pos="up" small transparent @click="openSettingDialog">
+            <Cog fillColor="white" />
+          </IconButton>
+          <IconButton aria-label="informations" data-balloon-pos="left" small transparent @click="openInformationDialog">
             <InformationVariant fillColor="white" />
           </IconButton>
         </span>
@@ -24,24 +33,8 @@ const openDialog = () => {
         <slot></slot>
       </div>
     </div>
-    <ModalWindow v-model:dialog="dialog">
-      <section>
-        <h2>How to use</h2>
-        <ol>
-          <li>Write on the left page.</li>
-          <li>Review on the right page.</li>
-          <li>Feedback to the left page.</li>
-        </ol>
-        <p>Good luck!</p>
-      </section>
-      <section>
-        <h2>Contact me</h2>
-        <p>Contact me if you have any questions.</p>
-        <ul>
-          <li><a href="https://twitter.com/fukuchiharuki">Twitter</a></li>
-        </ul>
-      </section>
-    </ModalWindow>
+    <InformationDialog v-model:dialog="informationDialog" />
+    <SettingDialog v-model:dialog="settingDialog" />
   </div>
 </template>
 
@@ -89,6 +82,10 @@ body {
 
     &>.menu {
       padding-right: 8px;
+
+      button+button {
+        margin-left: 8px;
+      }
     }
   }
 }
