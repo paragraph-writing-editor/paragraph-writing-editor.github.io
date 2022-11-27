@@ -19,8 +19,8 @@ const settings = useState('setting.sentenceBoundaryDetection', () =>
   })
 )
 
-const checkedSettings = ref(objectSettingsToArray(settings.value))
-watch(checkedSettings, (newSettings, _) => {
+const settingsSelection = ref(objectSettingsToArray(settings.value))
+watch(settingsSelection, (newSettings, _) => {
   settings.value = arraySettingsToObject(newSettings, settings.value)
   setSettings('sentenceBoundaryDetection', settings.value)
 })
@@ -34,33 +34,33 @@ watch(checkedSettings, (newSettings, _) => {
         <h2>Sentence Boundary Detection</h2>
         <p>
           <label>
-            <input type="checkbox" value="halfwidthDotSpace" v-model="checkedSettings" />
+            <input type="checkbox" value="halfwidthDotSpace" v-model="settingsSelection" />
             <span class="code">.&nbsp;</span> <span class="note">(half-width dot followed a space)</span>
           </label>
         </p>
         <p>
           <label>
-            <input type="checkbox" value="halfwidthDotDoubleQuotationSpace" v-model="checkedSettings" />
+            <input type="checkbox" value="halfwidthDotDoubleQuotationSpace" v-model="settingsSelection" />
             <span class="code">."&nbsp;</span> <span class="note">(half-width dot followed a double quotation and a
               space)</span>
           </label>
         </p>
         <p>
           <label>
-            <input type="checkbox" value="halfwidthDotSingleQuotationSpace" v-model="checkedSettings" />
+            <input type="checkbox" value="halfwidthDotSingleQuotationSpace" v-model="settingsSelection" />
             <span class="code">.'&nbsp;</span> <span class="note">(half-width dot followed a single quotation and a
               space)</span>
           </label>
         </p>
         <p>
           <label>
-            <input type="checkbox" value="fullwidthDot" v-model="checkedSettings" />
+            <input type="checkbox" value="fullwidthDot" v-model="settingsSelection" />
             <span class="code">&#xff0e</span> <span class="note">(full-width dot)</span>
           </label>
         </p>
         <p>
           <label>
-            <input type="checkbox" value="fullwidthSmallCircle" v-model="checkedSettings" />
+            <input type="checkbox" value="fullwidthSmallCircle" v-model="settingsSelection" />
             <span class="code">。</span> <span class="note">(full-width small circle)</span>
           </label>
         </p>
