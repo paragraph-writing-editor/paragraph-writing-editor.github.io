@@ -5,7 +5,12 @@ export function getSettings(category: string, defaultSettings: object = {}): obj
   const ret = { ...defaultSettings }
   Object.keys(localStorage)
     .filter((key: string) => key.startsWith(categoryPrefix))
-    .forEach((key) => ret[key.substring(categoryPrefix.length + 1)] = localStorage.getItem(key))
+    .forEach((key) => {
+      if (typeof ret[key.substring(categoryPrefix.length + 1)] == 'boolean')
+        ret[key.substring(categoryPrefix.length + 1)] = isTrue(localStorage.getItem(key))
+      else
+        ret[key.substring(categoryPrefix.length + 1)] = localStorage.getItem(key)
+    })
   return ret
 }
 
@@ -15,7 +20,7 @@ export function setSettings(category: string, settings: object) {
 }
 
 export function objectSettingsToArray(settings: object): string[] {
-  return Object.keys(settings).filter((item) => isTrue(settings[item]))
+  return Object.keys(settings).filter((item) => settings[item])
 }
 
 export function arraySettingsToObject(settings: string[], src: object = {}): object {

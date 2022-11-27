@@ -20,7 +20,7 @@ export default function useSentenceBoundaryDetectionSettings(): {
       halfwidthDotSingleQuotationSpace: true,
       fullwidthDot: true,
       fullwidthSmallCircle: true,
-    }) as SentenceBoundaryDetectionSettings
+    } as SentenceBoundaryDetectionSettings) as SentenceBoundaryDetectionSettings
   )
 
   const settingsSelection = ref(objectSettingsToArray(settings.value))
