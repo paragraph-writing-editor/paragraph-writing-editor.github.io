@@ -35,6 +35,7 @@ const structure = computed(() => {
         .reduce((acc, fn) => fn(acc), it)
         .trim()
         .split('\n')
+        .map((s) => s.trim())
         .filter((s) => s.length)
     })
 })
@@ -111,6 +112,34 @@ const redo = () => {
   undoStack.value.push(extractedText)
   text.value = undoStack.value[undoStack.value.length - 1]
 }
+
+const formatOspl = () => {
+  if (text.value.trim().length == 0) return
+  const detections = [
+    settings.value.halfwidthDotSpace
+      ? (text: string) => text.replace(/(\.) ([^\n])/g, '$1\n$2') : (text: string) => text,
+    settings.value.halfwidthDotDoubleQuotationSpace
+      ? (text: string) => text.replace(/(\.\") ([^\n])/g, '$1\n$2') : (text: string) => text,
+    settings.value.halfwidthDotSingleQuotationSpace
+      ? (text: string) => text.replace(/(\.\') ([^\n])/g, '$1\n$2') : (text: string) => text,
+    settings.value.fullwidthDot // NOTE: U+ff0e (full-width dot)
+      ? (text: string) => text.replace(/(\uff0e)([^\n])/g, '$1\n$2') : (text: string) => text,
+    settings.value.fullwidthSmallCircle
+      ? (text: string) => text.replace(/(。)([^\n])/g, '$1\n$2') : (text: string) => text,
+  ]
+  text.value = detections.reduce((acc, fn) => fn(acc), text.value)
+}
+
+const formatOppl = () => {
+  if (text.value.trim().length == 0) return
+  const detections = [
+    // NOTE: half-width
+    (text: string) => text.replace(/([ -~]) ?\n([^\n])/g, '$1 $2'),
+    // NOTE: full-width (excluding line breaks)
+    (text: string) => text.replace(/([^ -~\n]) ?\n([^\n])/g, '$1$2')
+  ]
+  text.value = detections.reduce((acc, fn) => fn(acc), text.value)
+}
 </script>
 
 <template>
@@ -118,7 +147,7 @@ const redo = () => {
     <template v-slot:left-page>
       <ToolBar :text-empty="textEmpty" :can-undo="canUndo" :can-redo="canRedo" @new-click="clearText"
         @clipboard-click="resetWithClipboard" @folder-click="openFolder" @save-click="saveText" @copy-click="copyText"
-        @undo-click="undo" @redo-click="redo">
+        @undo-click="undo" @redo-click="redo" @format-ospl-click="formatOspl" @format-oppl-click="formatOppl">
         <WriteDownAreaLite v-model="text" />
       </ToolBar>
       <FolderDialog v-model:dialog="folder" @load="load" />
