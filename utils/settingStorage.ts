@@ -6,7 +6,7 @@ export function getSettings<T>(category: string, defaultSettings: T): T {
   Object.keys(localStorage)
     .filter((key: string) => key.startsWith(categoryPrefix))
     .forEach((key) => {
-      if (typeof ret[key.substring(categoryPrefix.length + 1)] == 'boolean')
+      if (typeof ret[key.substring(categoryPrefix.length + 1)] === 'boolean')
         ret[key.substring(categoryPrefix.length + 1)] = isTrue(localStorage.getItem(key))
       else
         ret[key.substring(categoryPrefix.length + 1)] = localStorage.getItem(key)

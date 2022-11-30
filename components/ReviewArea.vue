@@ -3,13 +3,18 @@ const props = defineProps<{
   structure: string[][]
   style: string
 }>()
+
+const sentenceClasses = (s: string) => [
+  'sentence',
+  s[s.length - 1].match(/[ -~]/) ? 'sentence--half-width' : 'sentence--full-width'
+]
 </script>
 
 <template>
   <div :class="['review-window', style].join(' ')">
     <div class="section">
       <p v-for="paragraph in structure" class="paragraph">
-        <span v-for="sentence in paragraph" class="sentence">{{ sentence }}</span>
+        <span v-for="sentence in paragraph" :class="sentenceClasses(sentence).join(' ')">{{ sentence }}</span>
       </p>
     </div>
   </div>
@@ -17,9 +22,15 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .topic-sentence-highlights {
-  .sentence:first-child {
-    color: darkred;
-    font-weight: bold;
+  .sentence {
+    &:first-child {
+      color: darkred;
+      font-weight: bold;
+    }
+
+    &--half-width+.sentence {
+      margin-left: 0.5em;
+    }
   }
 }
 
