@@ -35,6 +35,7 @@ const structure = computed(() => {
         .reduce((acc, fn) => fn(acc), it)
         .trim()
         .split('\n')
+        .map((s) => s.trim())
         .filter((s) => s.length)
     })
 })
