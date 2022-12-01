@@ -2,8 +2,8 @@
 import Snackbar from 'node-snackbar';
 
 const { text, textEmpty, clearText } = useFlatText()
-const { loadFromClipboard, saveToClipboard } = useClipboardText(text)
-const { loadFromLocalStorage, saveToLocalStorage } = useLocalStorageText(text)
+const { loadFromClipboard, saveToClipboard } = useClipboardIO(text)
+const { loadFromLocalStorage, saveToLocalStorage } = useLocalStorageIO(text)
 const { canUndo, canRedo, undo, redo } = useUndoRedoHistory(text)
 
 const { settings } = useSentenceBoundaryDetectionSettings()
