@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import {
-  getDocSnapshotKeys,
-  docSnapshotKeyToDate,
-  deleteDocSnapshots,
-  getDocSnapshot
-} from '../utils/documentStorage';
-
 const props = defineProps<{
   dialog: boolean
 }>()
@@ -15,8 +8,17 @@ const emit = defineEmits<{
   (e: 'load', value: string): void
 }>()
 
-const docs = ref([] as string[])
-const docsSelection = ref([] as string[])
+const {
+  docs,
+  selectedDocs,
+  selectedAll,
+  getDateTime,
+  getText,
+  initialize,
+  selectAll,
+  remove
+} = useLocalStorageFolder()
+
 const { dialog } = toRefs(props)
 watch(dialog, (newDialog, oldDialog) => {
   if (newDialog && !oldDialog) {
@@ -24,34 +26,10 @@ watch(dialog, (newDialog, oldDialog) => {
   }
 })
 
-const texts = computed(() => {
-  const ret = {}
-  docs.value.forEach((key) => ret[key] = getDocSnapshot(key))
-  return ret
-})
-
 const load = (e: Event) => {
   const key = (e.target as HTMLAnchorElement).dataset['key']
   emit('load', key)
   emit('update:dialog', false)
-}
-
-const remove = () => {
-  deleteDocSnapshots(docsSelection.value)
-  initialize()
-}
-
-const selectedAll = computed(() => docsSelection.value.length == docs.value.length)
-const selectAll = () => {
-  if (selectedAll.value)
-    docsSelection.value = []
-  else
-    docsSelection.value = docs.value
-}
-
-function initialize() {
-  docs.value = getDocSnapshotKeys()
-  docsSelection.value = []
 }
 </script>
 
@@ -64,7 +42,7 @@ function initialize() {
       </div>
       <div v-if="docs.length">
         <p>
-          <RoundedButton destroy :disabled="!docsSelection.length" @click="remove">Remove selected items</RoundedButton>
+          <RoundedButton destroy :disabled="!selectedDocs.length" @click="remove">Remove selected items</RoundedButton>
         </p>
         <p>
           <a @click="selectAll">
@@ -79,11 +57,11 @@ function initialize() {
             </div>
             <p>
               <label>
-                <input type="checkbox" :value="key" v-model="docsSelection" />
-                {{ docSnapshotKeyToDate(key).toLocaleString().replace(/([^\d])([\d])([^\d])/g, '$10$2$3') }}
+                <input type="checkbox" :value="key" v-model="selectedDocs" />
+                {{ getDateTime(key) }}
               </label>
             </p>
-            <p class="text">{{ texts[key] }}</p>
+            <p class="text">{{ getText(key) }}</p>
           </div>
         </div>
       </div>
