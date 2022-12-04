@@ -53,8 +53,12 @@ export default class TextLineDetection {
   }
 
   private static detectHorizon(line: string): TextLineDetection | null {
-    if (line.match(/^([*-_]){3}/)) return new TextLineDetection(TextStructureElementType.HR)
-    if (line.match(/^([*-_] ){3}/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (line.match(/^\*\*\*/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (line.match(/^---/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (line.match(/^___/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (line.match(/^\* \* \*/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (line.match(/^- - -/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (line.match(/^_ _ _/)) return new TextLineDetection(TextStructureElementType.HR)
     return null
   }
 
