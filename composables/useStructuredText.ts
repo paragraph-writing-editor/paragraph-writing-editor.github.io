@@ -1,20 +1,21 @@
 import { Ref, ComputedRef } from 'vue';
+import TextStructureComposer from '~~/models/TextStructureComposer';
+import TextStructureElement from '~~/models/TextStructureElement';
 import { SentenceBoundaryDetectionSettings } from './useSentenceBoundaryDetectionSettings';
 
 export default function useStructuredText(
   text: Ref<string>,
   settings: Ref<SentenceBoundaryDetectionSettings>
 ): {
-  structure: ComputedRef<string[][]>
+  structure: ComputedRef<TextStructureElement[]>
 } {
   const structure = computed(() => {
-    return text.value
-      // sections
+    const composer = new TextStructureComposer()
+    text.value
       .trim()
       .replace(/\n\n+/g, '\n\n')
-      .split('\n\n')
-      // sentences
-      .map((it) => {
+      .split('\n')
+      .forEach((it) => {
         const detections = [
           settings.value.halfwidthDotSpace
             ? (text: string) => text.replace(/(\. )/g, '$1\n') : (text: string) => text,
@@ -27,13 +28,14 @@ export default function useStructuredText(
           settings.value.fullwidthSmallCircle
             ? (text: string) => text.replace(/(。)/g, '$1\n') : (text: string) => text,
         ]
-        return detections
+        detections
           .reduce((acc, fn) => fn(acc), it)
           .trim()
           .split('\n')
           .map((s) => s.trim())
-          .filter((s) => s.length)
+          .forEach((s) => composer.compose(s))
       })
+    return composer.elements
   })
 
   return { structure }
