@@ -12,15 +12,11 @@ const emit = defineEmits<{
 const close = () => {
   emit('update:dialog', false)
 }
-
-const stop = (e: Event) => {
-  e.stopPropagation()
-}
 </script>
 
 <template>
   <div v-if="dialog" class="modal-background" @click="close">
-    <div class="modal-window" @click="stop">
+    <div class="modal-window" @click.stop>
       <slot></slot>
       <div class="close-button" @click="close">
         <IconButton>
