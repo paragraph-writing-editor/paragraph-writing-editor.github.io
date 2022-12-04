@@ -1,13 +1,22 @@
 <script setup lang="ts">
+import TextStructureElement from '~~/models/TextStructureElement';
+
 const props = defineProps<{
-  structure: string[][]
+  structure: TextStructureElement[]
 }>()
 
 const status = computed(() => {
-  const paragraphs = props.structure.length
-  const sentences = props.structure.reduce((acc, p) => acc + p.length, 0)
-  const characters = props.structure.reduce((acc, p) =>
-    acc + p.reduce((acc, s) => acc + s.length, 0), 0)
+  const paragraphs = props.structure
+    .filter((it) => it.isParagraph())
+    .length
+  const sentences = props.structure
+    .filter((it) => it.isParagraph())
+    .map((it) => it.countSentences())
+    .reduce((acc, count) => acc + count, 0)
+  const characters = props.structure
+    .filter((it) => it.isParagraph())
+    .map((it) => it.countCharacters())
+    .reduce((acc, count) => acc + count, 0)
   return {
     paragraphs: Math.min(paragraphs, sentences),
     sentences,
