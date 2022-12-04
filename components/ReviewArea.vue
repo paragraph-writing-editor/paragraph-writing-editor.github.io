@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import TextStructureElement, { TextStructureElementType } from '~~/models/TextStructureElement';
+
 const props = defineProps<{
-  structure: string[][]
+  structure: TextStructureElement[]
   style: string
 }>()
 
@@ -12,11 +14,18 @@ const sentenceClasses = (s: string) => [
 
 <template>
   <div :class="['review-window', style].join(' ')">
-    <div class="section">
-      <p v-for="paragraph in structure" class="paragraph">
-        <span v-for="sentence in paragraph" :class="sentenceClasses(sentence).join(' ')">{{ sentence }}</span>
+    <template v-for="element in structure" class="paragraph">
+      <p v-if="element.type == TextStructureElementType.P"><span v-for="sentence in element.contents"
+          :class="sentenceClasses(sentence).join(' ')">{{ sentence }}</span>
       </p>
-    </div>
+      <h1 v-else-if="element.type == TextStructureElementType.H1">{{ element.contents[0] }}</h1>
+      <h2 v-else-if="element.type == TextStructureElementType.H2">{{ element.contents[0] }}</h2>
+      <h3 v-else-if="element.type == TextStructureElementType.H3">{{ element.contents[0] }}</h3>
+      <h4 v-else-if="element.type == TextStructureElementType.H4">{{ element.contents[0] }}</h4>
+      <h5 v-else-if="element.type == TextStructureElementType.H5">{{ element.contents[0] }}</h5>
+      <h6 v-else-if="element.type == TextStructureElementType.H6">{{ element.contents[0] }}</h6>
+      <hr v-else-if="element.type == TextStructureElementType.HR" />
+    </template>
   </div>
 </template>
 
@@ -29,7 +38,9 @@ const sentenceClasses = (s: string) => [
     }
 
     &--half-width+.sentence {
-      margin-left: 0.5em;
+      &::before {
+        content: ' ';
+      }
     }
   }
 }
