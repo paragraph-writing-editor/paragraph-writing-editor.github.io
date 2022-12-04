@@ -28,14 +28,13 @@ export default function useStructuredText(
       .trim()
       .replace(/\n\n+/g, '\n\n')
       .split('\n')
-      .forEach((line) => {
-        detections
-          .reduce((acc, fn) => TextLineDetection.detect(line).isParagraphingComposition() ? fn(acc) : acc, line)
-          .trim()
-          .split('\n')
-          .map((s) => s.trim())
-          .forEach((s) => composer.compose(s))
-      })
+      .map((line) => TextLineDetection.detect(line).isParagraphingComposition()
+        ? detections.reduce((acc, fn) => fn(acc), line)
+        : line
+      )
+      .flatMap((block) => block.trim().split('\n'))
+      .map((s) => s.trim())
+      .forEach((s) => composer.compose(s))
     return composer.elements
   })
 
