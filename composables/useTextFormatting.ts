@@ -22,7 +22,13 @@ export default function useTextFormatting(
       settings.value.fullwidthSmallCircle
         ? (text: string) => text.replace(/(。)([^\n])/g, '$1\n$2') : (text: string) => text,
     ]
-    text.value = detections.reduce((acc, fn) => fn(acc), text.value)
+    text.value = text.value
+      .split('\n')
+      .map((line) => TextLineDetection.detect(line).isParagraphingComposition()
+        ? detections.reduce((acc, fn) => fn(acc), line)
+        : line
+      )
+      .join('\n')
   }
 
   const oneParagraphPerLine = () => {
