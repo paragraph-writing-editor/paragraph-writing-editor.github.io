@@ -38,7 +38,9 @@ const sentenceClasses = (s: string) => [
     }
 
     &--half-width+.sentence {
-      margin-left: 0.5em;
+      &::before {
+        content: ' ';
+      }
     }
   }
 }
