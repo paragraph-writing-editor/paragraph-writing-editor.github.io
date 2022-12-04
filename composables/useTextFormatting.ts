@@ -1,4 +1,5 @@
 import { Ref } from 'vue';
+import TextLineDetection from '~~/models/TextLineDetection';
 import { SentenceBoundaryDetectionSettings } from './useSentenceBoundaryDetectionSettings';
 
 export default function useTextFormatting(
@@ -25,13 +26,30 @@ export default function useTextFormatting(
   }
 
   const oneParagraphPerLine = () => {
-    const detections = [
-      // NOTE: half-width
-      (text: string) => text.replace(/([ -~]) ?\n([^\n])/g, '$1 $2'),
-      // NOTE: full-width (excluding line breaks)
-      (text: string) => text.replace(/([^ -~\n]) ?\n([^\n])/g, '$1$2')
-    ]
-    text.value = detections.reduce((acc, fn) => fn(acc), text.value)
+    var textResult: string = ''
+    var textBuffer: string = ''
+    text.value
+      .split('\n')
+      .forEach((line) => {
+        if (TextLineDetection.detect(line).isParagraphingComposition()) {
+          textBuffer += `${line}\n`
+        } else {
+          textResult += paragraph(textBuffer)
+          textBuffer = ''
+          textResult += `${line}\n`
+        }
+      })
+    text.value = (textResult + paragraph(textBuffer)).trimEnd()
+
+    function paragraph(textBuffer: string): string {
+      const detections = [
+        // NOTE: half-width
+        (text: string) => text.replace(/([ -~]) ?\n([^\n])/g, '$1 $2'),
+        // NOTE: full-width (excluding line breaks)
+        (text: string) => text.replace(/([^ -~\n]) ?\n([^\n])/g, '$1$2')
+      ]
+      return detections.reduce((acc, fn) => fn(acc), textBuffer)
+    }
   }
 
   return {
