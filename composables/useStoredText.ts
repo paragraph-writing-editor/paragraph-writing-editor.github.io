@@ -6,7 +6,7 @@ import {
   deleteDocSnapshots
 } from '../utils/docsAccess';
 
-export default function useLocalStorageText(text: Ref<string>): {
+export default function useStoredText(text: Ref<string>): {
   loadFromLocalStorage: (_: string) => void
   saveToLocalStorage: () => void
 } {
