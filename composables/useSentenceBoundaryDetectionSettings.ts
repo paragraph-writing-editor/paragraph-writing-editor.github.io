@@ -1,5 +1,5 @@
 import { Ref } from 'vue'
-import { getSettings, setSettings, objectSettingsToArray, arraySettingsToObject } from '../utils/settingStorage'
+import { getSettings, setSettings, objectSettingsToArray, arraySettingsToObject } from '../utils/settingsAccess'
 
 export type SentenceBoundaryDetectionSettings = {
   halfwidthDotSpace: boolean
