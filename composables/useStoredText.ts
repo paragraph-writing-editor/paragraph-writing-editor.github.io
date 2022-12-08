@@ -4,7 +4,7 @@ import {
   getLatestDocSnapshotKey,
   getDocSnapshot,
   deleteDocSnapshots
-} from '../utils/docsAccess';
+} from '../operations/docsAccess';
 
 export default function useStoredText(text: Ref<string>): {
   loadFromLocalStorage: (_: string) => void

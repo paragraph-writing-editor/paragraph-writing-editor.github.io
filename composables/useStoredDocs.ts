@@ -4,7 +4,7 @@ import {
   docSnapshotKeyToDate,
   deleteDocSnapshots,
   getDocSnapshot
-} from '../utils/docsAccess';
+} from '../operations/docsAccess';
 
 export default function useStoredDocs(): {
   docs: Ref<string[]>
