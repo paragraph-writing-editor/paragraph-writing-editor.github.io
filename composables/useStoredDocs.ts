@@ -6,7 +6,7 @@ import {
   getDocSnapshot
 } from '../utils/docsAccess';
 
-export default function useLocalStorageFolder(): {
+export default function useStoredDocs(): {
   docs: Ref<string[]>
   selectedDocs: Ref<string[]>
   selectedAll: ComputedRef<boolean>
