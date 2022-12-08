@@ -4,7 +4,7 @@ import {
   docSnapshotKeyToDate,
   deleteDocSnapshots,
   getDocSnapshot
-} from '../utils/documentStorage';
+} from '../utils/docsAccess';
 
 export default function useLocalStorageFolder(): {
   docs: Ref<string[]>
