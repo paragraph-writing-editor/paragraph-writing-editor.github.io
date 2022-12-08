@@ -2,9 +2,9 @@
 import Snackbar from 'node-snackbar';
 
 const { text, textEmpty, clearText } = useFlatText()
-const { loadFromClipboard, saveToClipboard } = useClipboardIO(text)
-const { loadFromLocalStorage, saveToLocalStorage } = useLocalStorageIO(text)
-const { canUndo, canRedo, undo, redo } = useUndoRedoHistory(text)
+const { loadFromClipboard, saveToClipboard } = useClipboardText(text)
+const { loadFromLocalStorage, saveToLocalStorage } = useStoredText(text)
+const { canUndo, canRedo, undo, redo } = useTextEditHistory(text)
 
 const { settings } = useSentenceBoundaryDetectionSettings()
 const { oneSentencePerLine, oneParagraphPerLine } = useTextFormatting(text, settings)

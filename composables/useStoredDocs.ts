@@ -4,9 +4,9 @@ import {
   docSnapshotKeyToDate,
   deleteDocSnapshots,
   getDocSnapshot
-} from '../utils/documentStorage';
+} from '../operations/docsAccess';
 
-export default function useLocalStorageFolder(): {
+export default function useStoredDocs(): {
   docs: Ref<string[]>
   selectedDocs: Ref<string[]>
   selectedAll: ComputedRef<boolean>

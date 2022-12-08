@@ -17,7 +17,7 @@ const {
   initialize,
   selectAll,
   remove
-} = useLocalStorageFolder()
+} = useStoredDocs()
 
 const { dialog } = toRefs(props)
 watch(dialog, (newDialog, oldDialog) => {

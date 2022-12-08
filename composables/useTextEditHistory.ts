@@ -1,6 +1,6 @@
 import { Ref, ComputedRef } from 'vue';
 
-export default function useUndoRedoHistory(text: Ref<string>): {
+export default function useTextEditHistory(text: Ref<string>): {
   canUndo: ComputedRef<boolean>
   canRedo: ComputedRef<boolean>
   undo: () => void
