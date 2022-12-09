@@ -2,7 +2,7 @@
 const props = withDefaults(defineProps<{
   small?: boolean
   transparent?: boolean
-}>(),{
+}>(), {
   small: false,
   transparent: false
 })
