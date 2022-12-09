@@ -29,7 +29,7 @@ watch(modelValue, (newValue, oldValue) => {
     applyText.value = newValue
     applyKey.value = Math.random()
     nextTick(() => {
-      ifNotNull(areaRef.value, (element) => {
+      notNull(areaRef.value, (element) => {
         element.focus()
         if (newValue.length > 0) {
           // NOTE: A double LF is for display convenience.
