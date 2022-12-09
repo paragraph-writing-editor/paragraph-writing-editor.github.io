@@ -8,11 +8,12 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.12"
+    "nuxt": "3.0.0"
   },
   "dependencies": {
+    "@vueuse/shared": "^9.6.0",
     "node-snackbar": "^0.1.16",
-    "sass": "^1.55.0",
+    "sass": "^1.56.2",
     "vue-material-design-icons": "^5.1.2"
   }
 }

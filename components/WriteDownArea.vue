@@ -1,7 +1,6 @@
 <script setup lang="ts">
+import { Ref } from 'vue';
 import { useDebounceFn } from '@vueuse/shared';
-import { endsWithSingleLf, trimTrailingLf } from '../utils/elementUtil';
-import { insertText, extractText, moveCursor } from '../utils/selectionUtil';
 
 const props = defineProps<{
   modelValue: string
@@ -20,7 +19,7 @@ const emit = defineEmits<{
 const innerText = ref(props.modelValue)
 const applyText = ref(props.modelValue)
 const applyKey = ref(Math.random())
-const areaRef = ref(null)
+const areaRef = ref(null) as Ref<HTMLDivElement | null>
 const { modelValue } = toRefs(props)
 watch(modelValue, (newValue, oldValue) => {
   const propsChange = () => newValue != oldValue
@@ -30,12 +29,14 @@ watch(modelValue, (newValue, oldValue) => {
     applyText.value = newValue
     applyKey.value = Math.random()
     nextTick(() => {
-      areaRef.value.focus()
-      if (newValue.length > 0) {
-        // NOTE: A double LF is for display convenience.
-        const lfOffset = newValue.match(/\n\n$/) ? -1 : 0
-        moveCursor(areaRef.value.firstChild, newValue.length + lfOffset)
-      }
+      notNull(areaRef.value, (element) => {
+        element.focus()
+        if (newValue.length > 0) {
+          // NOTE: A double LF is for display convenience.
+          const lfOffset = newValue.match(/\n\n$/) ? -1 : 0
+          moveCursor(element.firstChild, newValue.length + lfOffset)
+        }
+      })
     })
   }
 })
@@ -50,7 +51,7 @@ const pasteText = (e: Event) => {
   const { target } = e
   if (!(e instanceof ClipboardEvent)) return
   if (!(target instanceof HTMLDivElement)) return
-  const clipboard = e.clipboardData.getData('text/plain')
+  const clipboard = e.clipboardData?.getData('text/plain') || ''
   insertText(clipboard.replace(/\r\n/g, '\n'))
   adjustTrailingLf(target, () => trimTrailingLf(target))
 }
