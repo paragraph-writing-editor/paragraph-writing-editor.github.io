@@ -27,9 +27,10 @@ watch(dialog, (newDialog, oldDialog) => {
 })
 
 const load = (e: Event) => {
-  const key = (e.target as HTMLAnchorElement).dataset['key']
-  emit('load', key)
-  emit('update:dialog', false)
+  ifNotNull((e.target as HTMLAnchorElement).dataset['key'], (key) => {
+    emit('load', key)
+    emit('update:dialog', false)
+  })
 }
 </script>
 

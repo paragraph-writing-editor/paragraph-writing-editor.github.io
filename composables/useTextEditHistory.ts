@@ -21,7 +21,7 @@ export default function useTextEditHistory(text: Ref<string>): {
   const canUndo = computed(() => undoStack.value.length > 1)
   const undo = () => {
     if (!canUndo.value) return
-    const extractedText = undoStack.value.pop()
+    const extractedText = undoStack.value.pop()!
     redoStack.value.push(extractedText)
     text.value = undoStack.value[undoStack.value.length - 1]
   }
@@ -29,7 +29,7 @@ export default function useTextEditHistory(text: Ref<string>): {
   const canRedo = computed(() => redoStack.value.length > 0)
   const redo = () => {
     if (!canRedo.value) return
-    const extractedText = redoStack.value.pop()
+    const extractedText = redoStack.value.pop()!
     undoStack.value.push(extractedText)
     text.value = undoStack.value[undoStack.value.length - 1]
   }

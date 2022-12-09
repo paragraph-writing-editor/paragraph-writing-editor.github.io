@@ -21,8 +21,8 @@ export default function useStoredDocs(): {
   const selectedAll = computed(() => selectedDocs.value.length == docs.value.length)
 
   const texts = computed(() => {
-    const ret = {}
-    docs.value.forEach((key) => ret[key] = getDocSnapshot(key))
+    const ret = {} as Record<string, string>
+    docs.value.forEach((key) => ret[key] = getDocSnapshot(key) || '')
     return ret
   })
 

@@ -11,7 +11,7 @@ export default function useStoredText(text: Ref<string>): {
   saveToLocalStorage: () => void
 } {
   const loadFromLocalStorage = (key: string) => {
-    text.value = getDocSnapshot(key)
+    text.value = getDocSnapshot(key) || ''
   }
 
   const saveToLocalStorage = () => {
