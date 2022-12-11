@@ -7,9 +7,9 @@ const openInformationDialog = () => {
   informationDialog.value = true
 }
 
-const settingDialog = ref(false)
-const openSettingDialog = () => {
-  settingDialog.value = true
+const configurationDialog = ref(false)
+const openConfigurationDialog = () => {
+  configurationDialog.value = true
 }
 </script>
 
@@ -21,7 +21,7 @@ const openSettingDialog = () => {
         <span class="description">A tool for improving your writing.</span>
         <span class="spacer"></span>
         <span class="menu">
-          <IconButton aria-label="Configuration" data-balloon-pos="up" small transparent @click="openSettingDialog">
+          <IconButton aria-label="Configuration" data-balloon-pos="up" small transparent @click="openConfigurationDialog">
             <Cog fillColor="white" />
           </IconButton>
           <IconButton aria-label="Informations" data-balloon-pos="left" small transparent
@@ -35,7 +35,7 @@ const openSettingDialog = () => {
       </div>
     </div>
     <InformationDialog v-model:dialog="informationDialog" />
-    <SettingDialog v-model:dialog="settingDialog" />
+    <ConfigurationDialog v-model:dialog="configurationDialog" />
   </div>
 </template>
 
