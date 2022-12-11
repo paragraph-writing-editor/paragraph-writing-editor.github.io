@@ -100,6 +100,7 @@ const toggleEtcMenus = (fn?: (_: void) => void) => {
     border-radius: 2px;
     font-size: small;
     background-color: white;
+    z-index: 1;
 
     section {
       .title {
