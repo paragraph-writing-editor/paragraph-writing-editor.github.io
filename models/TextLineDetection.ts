@@ -56,22 +56,46 @@ class TextLineDetectionExecutor {
   }
 
   private detectHeadline(line: string): TextLineDetection | null {
-    if (line.match(/^#{1} /)) return new TextLineDetection(TextStructureElementType.H1, line.substring(2))
-    if (line.match(/^#{2} /)) return new TextLineDetection(TextStructureElementType.H2, line.substring(3))
-    if (line.match(/^#{3} /)) return new TextLineDetection(TextStructureElementType.H3, line.substring(4))
-    if (line.match(/^#{4} /)) return new TextLineDetection(TextStructureElementType.H4, line.substring(5))
-    if (line.match(/^#{5} /)) return new TextLineDetection(TextStructureElementType.H5, line.substring(6))
-    if (line.match(/^#{6} /)) return new TextLineDetection(TextStructureElementType.H6, line.substring(7))
+    if (this.settings.latexStyle) {
+      if (line.match(/^[\\¥]part\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H1, line.replace(/^[\\¥]part\*?{(.*)}$/, '$1'))
+      if (line.match(/^[\\¥]chapter\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H1, line.replace(/^[\\¥]chapter\*?{(.*)}$/, '$1'))
+      if (line.match(/^[\\¥]section\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H2, line.replace(/^[\\¥]section\*?{(.*)}$/, '$1'))
+      if (line.match(/^[\\¥]subsection\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H3, line.replace(/^[\\¥]subsection\*?{(.*)}$/, '$1'))
+      if (line.match(/^[\\¥]subsubsection\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H4, line.replace(/^[\\¥]subsubsection\*?{(.*)}$/, '$1'))
+      if (line.match(/^[\\¥]paragraph\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H5, line.replace(/^[\\¥]paragraph\*?{(.*)}$/, '$1'))
+      if (line.match(/^[\\¥]subparagraph\*?{.*}$/))
+        return new TextLineDetection(TextStructureElementType.H6, line.replace(/^[\\¥]subparagraph\*?{(.*)}$/, '$1'))
+    }
+    if (this.settings.markdonwStyle) {
+      if (line.match(/^#{1} /)) return new TextLineDetection(TextStructureElementType.H1, line.substring(2))
+      if (line.match(/^#{2} /)) return new TextLineDetection(TextStructureElementType.H2, line.substring(3))
+      if (line.match(/^#{3} /)) return new TextLineDetection(TextStructureElementType.H3, line.substring(4))
+      if (line.match(/^#{4} /)) return new TextLineDetection(TextStructureElementType.H4, line.substring(5))
+      if (line.match(/^#{5} /)) return new TextLineDetection(TextStructureElementType.H5, line.substring(6))
+      if (line.match(/^#{6} /)) return new TextLineDetection(TextStructureElementType.H6, line.substring(7))
+    }
     return null
   }
 
   private detectHorizon(line: string): TextLineDetection | null {
-    if (line.match(/^\*\*\*/)) return new TextLineDetection(TextStructureElementType.HR)
-    if (line.match(/^---/)) return new TextLineDetection(TextStructureElementType.HR)
-    if (line.match(/^___/)) return new TextLineDetection(TextStructureElementType.HR)
-    if (line.match(/^\* \* \*/)) return new TextLineDetection(TextStructureElementType.HR)
-    if (line.match(/^- - -/)) return new TextLineDetection(TextStructureElementType.HR)
-    if (line.match(/^_ _ _/)) return new TextLineDetection(TextStructureElementType.HR)
+    if (this.settings.latexStyle) {
+      if (line.match(/[\\¥]hrulefill/)) return new TextLineDetection(TextStructureElementType.HR)
+      if (line.match(/[\\¥]dotfill/)) return new TextLineDetection(TextStructureElementType.HR)
+    }
+    if (this.settings.markdonwStyle) {
+      if (line.match(/^\*\*\*/)) return new TextLineDetection(TextStructureElementType.HR)
+      if (line.match(/^---/)) return new TextLineDetection(TextStructureElementType.HR)
+      if (line.match(/^___/)) return new TextLineDetection(TextStructureElementType.HR)
+      if (line.match(/^\* \* \*/)) return new TextLineDetection(TextStructureElementType.HR)
+      if (line.match(/^- - -/)) return new TextLineDetection(TextStructureElementType.HR)
+      if (line.match(/^_ _ _/)) return new TextLineDetection(TextStructureElementType.HR)
+    }
     return null
   }
 
