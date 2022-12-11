@@ -6,9 +6,14 @@ const { loadFromClipboard, saveToClipboard } = useClipboardText(text)
 const { loadFromLocalStorage, saveToLocalStorage } = useStoredText(text)
 const { canUndo, canRedo, undo, redo } = useTextEditHistory(text)
 
-const { settings } = useSentenceBoundaryDetectionSettings()
-const { oneSentencePerLine, oneParagraphPerLine } = useTextFormatting(text, settings)
-const { structure } = useStructuredText(text, settings)
+const { settings: sentenceBoundaryDetectionSettings } = useSentenceBoundaryDetectionSettings()
+const { settings: lineDetectionSettings } = useLineDetectionSettings()
+const config = {
+  sentenceBoundaryDetectionSettings,
+  lineDetectionSettings,
+}
+const { oneSentencePerLine, oneParagraphPerLine } = useTextFormatting(text, config)
+const { structure } = useStructuredText(text, config)
 
 const folder = ref(false)
 const openFolder = () => { folder.value = true }

@@ -1,3 +1,4 @@
+import { LineDetectionSettings } from "~~/composables/useLineDetectionSettings"
 import { TextStructureElementType } from "./TextStructureElement"
 
 export default class TextLineDetection {
@@ -12,11 +13,8 @@ export default class TextLineDetection {
     this.text = text
   }
 
-  static detect(line: string): TextLineDetection {
-    return TextLineDetection.detectHeadline(line)
-      || TextLineDetection.detectHorizon(line)
-      || TextLineDetection.detectLineBreak(line)
-      || new TextLineDetection(TextStructureElementType.P, line)
+  static config(settings: LineDetectionSettings): TextLineDetectionExecutor {
+    return new TextLineDetectionExecutor(settings)
   }
 
   isLineBreak(): boolean {
@@ -41,8 +39,23 @@ export default class TextLineDetection {
   isParagraphingComposition(): boolean {
     return !this.isLineBreak() && !this.isSingleLineComposition()
   }
+}
 
-  private static detectHeadline(line: string): TextLineDetection | null {
+class TextLineDetectionExecutor {
+  settings: LineDetectionSettings
+
+  constructor(settings: LineDetectionSettings) {
+    this.settings = settings
+  }
+
+  detect(line: string): TextLineDetection {
+    return this.detectHeadline(line)
+      || this.detectHorizon(line)
+      || this.detectLineBreak(line)
+      || new TextLineDetection(TextStructureElementType.P, line)
+  }
+
+  private detectHeadline(line: string): TextLineDetection | null {
     if (line.match(/^#{1} /)) return new TextLineDetection(TextStructureElementType.H1, line.substring(2))
     if (line.match(/^#{2} /)) return new TextLineDetection(TextStructureElementType.H2, line.substring(3))
     if (line.match(/^#{3} /)) return new TextLineDetection(TextStructureElementType.H3, line.substring(4))
@@ -52,7 +65,7 @@ export default class TextLineDetection {
     return null
   }
 
-  private static detectHorizon(line: string): TextLineDetection | null {
+  private detectHorizon(line: string): TextLineDetection | null {
     if (line.match(/^\*\*\*/)) return new TextLineDetection(TextStructureElementType.HR)
     if (line.match(/^---/)) return new TextLineDetection(TextStructureElementType.HR)
     if (line.match(/^___/)) return new TextLineDetection(TextStructureElementType.HR)
@@ -62,7 +75,7 @@ export default class TextLineDetection {
     return null
   }
 
-  private static detectLineBreak(line: string): TextLineDetection | null {
+  private detectLineBreak(line: string): TextLineDetection | null {
     if (line.trim().length === 0) return new TextLineDetection(TextStructureElementType.BR)
     return null
   }
