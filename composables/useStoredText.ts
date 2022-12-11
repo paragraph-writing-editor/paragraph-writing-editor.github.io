@@ -4,14 +4,14 @@ import {
   getLatestDocSnapshotKey,
   getDocSnapshot,
   deleteDocSnapshots
-} from '../utils/documentStorage';
+} from '../operations/docsAccess';
 
-export default function useLocalStorageText(text: Ref<string>): {
+export default function useStoredText(text: Ref<string>): {
   loadFromLocalStorage: (_: string) => void
   saveToLocalStorage: () => void
 } {
   const loadFromLocalStorage = (key: string) => {
-    text.value = getDocSnapshot(key)
+    text.value = getDocSnapshot(key) || ''
   }
 
   const saveToLocalStorage = () => {

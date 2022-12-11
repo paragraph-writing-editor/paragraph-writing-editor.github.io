@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Ref } from 'vue';
 import { useDebounceFn } from '@vueuse/shared';
 
 const props = defineProps<{
@@ -14,14 +15,14 @@ const emit = defineEmits<{
  * areaRef:   to focus after reflection
  */
 const innerText = ref(props.modelValue)
-const areaRef = ref(null)
+const areaRef = ref(null) as Ref<HTMLTextAreaElement | null>
 const { modelValue } = toRefs(props)
 watch(modelValue, (newValue, oldValue) => {
   const propsChange = () => newValue != oldValue
   const valueChange = () => innerText.value != newValue
   if (propsChange() && valueChange()) {
     innerText.value = newValue
-    nextTick(() => areaRef.value.focus())
+    nextTick(() => areaRef.value?.focus())
   }
 })
 

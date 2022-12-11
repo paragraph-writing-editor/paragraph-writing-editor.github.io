@@ -17,7 +17,7 @@ const {
   initialize,
   selectAll,
   remove
-} = useLocalStorageFolder()
+} = useStoredDocs()
 
 const { dialog } = toRefs(props)
 watch(dialog, (newDialog, oldDialog) => {
@@ -27,9 +27,10 @@ watch(dialog, (newDialog, oldDialog) => {
 })
 
 const load = (e: Event) => {
-  const key = (e.target as HTMLAnchorElement).dataset['key']
-  emit('load', key)
-  emit('update:dialog', false)
+  notNull((e.target as HTMLAnchorElement).dataset['key'], (key) => {
+    emit('load', key)
+    emit('update:dialog', false)
+  })
 }
 </script>
 

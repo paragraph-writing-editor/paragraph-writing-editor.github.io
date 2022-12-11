@@ -30,4 +30,5 @@ const emit = defineEmits<{
 </template>
 
 <style scoped lang="scss">
+
 </style>

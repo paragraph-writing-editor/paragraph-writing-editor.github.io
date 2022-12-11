@@ -4,9 +4,9 @@ import {
   docSnapshotKeyToDate,
   deleteDocSnapshots,
   getDocSnapshot
-} from '../utils/documentStorage';
+} from '../operations/docsAccess';
 
-export default function useLocalStorageFolder(): {
+export default function useStoredDocs(): {
   docs: Ref<string[]>
   selectedDocs: Ref<string[]>
   selectedAll: ComputedRef<boolean>
@@ -21,8 +21,8 @@ export default function useLocalStorageFolder(): {
   const selectedAll = computed(() => selectedDocs.value.length == docs.value.length)
 
   const texts = computed(() => {
-    const ret = {}
-    docs.value.forEach((key) => ret[key] = getDocSnapshot(key))
+    const ret = {} as Record<string, string>
+    docs.value.forEach((key) => ret[key] = getDocSnapshot(key) || '')
     return ret
   })
 
