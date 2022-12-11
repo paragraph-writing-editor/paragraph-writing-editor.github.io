@@ -63,6 +63,7 @@ body {
     align-items: center;
     color: white;
     background-color: lightgray;
+    font-family: "游明朝", YuMincho, "Hiragino Mincho ProN W3", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
 
     &>.spacer {
       flex-grow: 1;
@@ -72,13 +73,12 @@ body {
       margin: 0 0 0 4px;
       font-size: inherit;
       font-weight: bold;
-      letter-spacing: 1px;
-      font-style: oblique;
     }
 
     &>.description {
       margin-left: 20px;
       font-size: small;
+      color: #f9f9f9;
     }
 
     &>.menu {
