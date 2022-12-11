@@ -1,20 +1,23 @@
+import { LineDetectionSettings } from "~~/composables/useLineDetectionSettings"
 import TextLineDetection from "./TextLineDetection"
 import TextStructureElement from "./TextStructureElement"
 import TextStructureStatusAction from "./TextStructureStatusAction"
 
 export default class TextStructureComposer {
+  settings: LineDetectionSettings
   status: TextStructureStatus
   elements: TextStructureElement[]
   action: TextStructureStatusAction
 
-  constructor() {
+  constructor(settings: LineDetectionSettings) {
+    this.settings = settings
     this.status = TextStructureStatus.BEGIN
     this.elements = []
     this.action = new TextStructureStatusAction()
   }
 
   compose(line: string) {
-    const detection = TextLineDetection.detect(line)
+    const detection = TextLineDetection.config(this.settings).detect(line)
     const nextStatus = this.nextStatus(detection)
     this.doAction(nextStatus, detection)
     this.status = nextStatus

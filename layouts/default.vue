@@ -7,9 +7,9 @@ const openInformationDialog = () => {
   informationDialog.value = true
 }
 
-const settingDialog = ref(false)
-const openSettingDialog = () => {
-  settingDialog.value = true
+const configurationDialog = ref(false)
+const openConfigurationDialog = () => {
+  configurationDialog.value = true
 }
 </script>
 
@@ -21,10 +21,10 @@ const openSettingDialog = () => {
         <span class="description">A tool for improving your writing.</span>
         <span class="spacer"></span>
         <span class="menu">
-          <IconButton aria-label="settings" data-balloon-pos="up" small transparent @click="openSettingDialog">
+          <IconButton aria-label="Configuration" data-balloon-pos="up" small transparent @click="openConfigurationDialog">
             <Cog fillColor="white" />
           </IconButton>
-          <IconButton aria-label="informations" data-balloon-pos="left" small transparent
+          <IconButton aria-label="Informations" data-balloon-pos="left" small transparent
             @click="openInformationDialog">
             <InformationVariant fillColor="white" />
           </IconButton>
@@ -35,7 +35,7 @@ const openSettingDialog = () => {
       </div>
     </div>
     <InformationDialog v-model:dialog="informationDialog" />
-    <SettingDialog v-model:dialog="settingDialog" />
+    <ConfigurationDialog v-model:dialog="configurationDialog" />
   </div>
 </template>
 
@@ -63,6 +63,7 @@ body {
     align-items: center;
     color: white;
     background-color: lightgray;
+    font-family: "游明朝", YuMincho, "Hiragino Mincho ProN W3", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
 
     &>.spacer {
       flex-grow: 1;
@@ -72,13 +73,12 @@ body {
       margin: 0 0 0 4px;
       font-size: inherit;
       font-weight: bold;
-      letter-spacing: 1px;
-      font-style: oblique;
     }
 
     &>.description {
       margin-left: 20px;
       font-size: small;
+      color: #f9f9f9;
     }
 
     &>.menu {

@@ -100,15 +100,16 @@ const toggleEtcMenus = (fn?: (_: void) => void) => {
     border-radius: 2px;
     font-size: small;
     background-color: white;
+    z-index: 1;
 
     section {
       .title {
-        padding: 4px 12px;
+        padding: 12px 12px 8px;
         font-weight: bold;
       }
 
       .item {
-        padding: 4px 16px;
+        padding: 8px 16px;
         cursor: pointer;
 
         &:hover {
