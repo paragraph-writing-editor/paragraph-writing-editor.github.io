@@ -21,10 +21,10 @@ const openSettingDialog = () => {
         <span class="description">A tool for improving your writing.</span>
         <span class="spacer"></span>
         <span class="menu">
-          <IconButton aria-label="settings" data-balloon-pos="up" small transparent @click="openSettingDialog">
+          <IconButton aria-label="Configuration" data-balloon-pos="up" small transparent @click="openSettingDialog">
             <Cog fillColor="white" />
           </IconButton>
-          <IconButton aria-label="informations" data-balloon-pos="left" small transparent
+          <IconButton aria-label="Informations" data-balloon-pos="left" small transparent
             @click="openInformationDialog">
             <InformationVariant fillColor="white" />
           </IconButton>
