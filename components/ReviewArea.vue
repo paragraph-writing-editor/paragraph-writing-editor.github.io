@@ -31,6 +31,10 @@ const sentenceClasses = (s: string) => [
 
 <style scoped lang="scss">
 .topic-sentence-highlights {
+  p {
+    text-indent: 1em;
+  }
+
   .sentence {
     &:first-child {
       color: darkred;
