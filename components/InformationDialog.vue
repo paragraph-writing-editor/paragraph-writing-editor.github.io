@@ -21,9 +21,9 @@ const emit = defineEmits<{
     </section>
     <section>
       <h1>Contact me</h1>
-      <p>Contact me if you have any questions.</p>
+      <p>Feel free to make issues if you have any questions.</p>
       <ul>
-        <li><a href="https://twitter.com/fukuchiharuki">Twitter</a></li>
+        <li><a href="https://github.com/paragraph-writing-editor/paragraph-writing-editor.github.io">GitHub</a></li>
       </ul>
     </section>
   </ModalWindow>
